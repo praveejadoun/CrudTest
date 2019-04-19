@@ -1,0 +1,31 @@
+<button (click)="addOption(option)">New Option</button>
+<button (click)="randOption()">Random Option</button>
+
+
+<!--<div  *ngFor ="let option of options">-->
+  <!--  <button (click)="editOption(option)">editOption</button> !-->
+  
+  <table class="table" border="1">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Option Name</th>
+            <th scope="col">Expiry Date</th>
+            <th scope="col">Strike Price</th>
+            <th scope="col">Premium</th>
+          </tr>
+        </thead> 
+        <tbody *ngFor ="let option of options">
+                <tr>
+                  <th scope="row">{{option.id}}</th>
+                  <td>{{option.name}}</td>
+                  <td>{{option.expiryDate | date}}</td>
+                  <td>{{option.strikePrice}}</td>
+                  <td>{{option.premium}}</td>
+                </tr>
+                
+              </tbody>
+            </table>
+
+    <!--<app-display-option [option]="option"></app-display-option>-->   
+<!--</div>-->

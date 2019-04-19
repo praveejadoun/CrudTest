@@ -1,0 +1,5 @@
+
+<div  *ngFor ="let employee of employees">
+<app-display-employee [employee]="employee"></app-display-employee>   
+<button (click)="editEmployee(employee)">editEmployee</button>
+</div>
