@@ -49,7 +49,7 @@ export class ListOptionsComponent implements OnInit {
     }
 
     randOption(){
-      for (let i = 1; i < 5000; i++) {
+      //for (let i = 1; i < 5000; i++) {
       
       var len = this.options.length;
       //alert(len);
@@ -60,7 +60,7 @@ export class ListOptionsComponent implements OnInit {
       
       oppp[rnd].premium = rnd;
       //alert(oppp[rnd]);
-      }  
+      //}  
       
   }
 
