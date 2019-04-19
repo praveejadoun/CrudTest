@@ -1,9 +1,10 @@
 const express = require('express');
+const app = express();
+
 const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
 
-const app = express();
 const port =  5000;
 
 app.use(express.static(path.join(__dirname,'dist/crudtest/')));
@@ -20,11 +21,11 @@ app.get('*',function(req, res){//get,put,post,delete
 
 const server = http.createServer(app);
 
-const io = socketIO('server');
+const io = socketIO(server);
 
-io.on('connection',()=>{
+io.on('connection',(socket)=>{
     console.log('new user connected');
-    
+
     socket.on('disconnect', ()=>{
         console.log('user dis-connected');
         
