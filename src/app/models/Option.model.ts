@@ -4,5 +4,5 @@ export class Option {
     expiryDate:Date;
     strikePrice?:number;
     premium?:number;
-    
+    format:number;
 }

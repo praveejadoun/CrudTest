@@ -16,8 +16,8 @@ export class OptionService {
       name:'OP-1',
       expiryDate:new Date('10/25/1988'),
       strikePrice:300,
-      premium:10
-      
+      premium:10,
+      format:0
     } 
   ];
 
@@ -32,6 +32,8 @@ public newOption(option:Option):void{
 
 public editOption(option:Option):void{
   option.name = "Option  changed";
+  option.format = 1;
+  
 }
 
 }

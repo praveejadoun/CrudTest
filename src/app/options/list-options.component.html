@@ -16,12 +16,13 @@
           </tr>
         </thead> 
         <tbody *ngFor ="let option of options;trackBy:trackByOptionCode">
-                <tr>
+                <tr [style.background-color]="option.id == 3 ? 'yellow' : 'white'">
                   <th scope="row">{{option.id}}</th>
                   <td>{{option.name}}</td>
                   <td>{{option.expiryDate | date}}</td>
                   <td>{{option.strikePrice}}</td>
                   <td>{{option.premium}}</td>
+                  <td>{{trackByOptionCode}}</td>
                 </tr>
                 
               </tbody>

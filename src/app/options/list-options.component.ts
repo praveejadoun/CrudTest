@@ -14,8 +14,8 @@ export class ListOptionsComponent implements OnInit {
     name:null,
     expiryDate:null,
     strikePrice:null,
-    premium:10
-    
+    premium:10,
+    format:0
   };
   
   trackByOptionCode(index:number,option:any):number{
@@ -47,6 +47,7 @@ export class ListOptionsComponent implements OnInit {
       this.op.expiryDate = new Date('12/25/1988')
       this.op.premium = i*10;
       this.op.strikePrice = i*100;
+      this.op.format=1;
       this._optionService.newOption(this.op);
       }
       //this.randOption();
