@@ -47,7 +47,7 @@ export class ListOptionsComponent implements OnInit {
       this.op.expiryDate = new Date('12/25/1988')
       this.op.premium = i*10;
       this.op.strikePrice = i*100;
-      this.op.format=1;
+      this.op.format=0;
       this._optionService.newOption(this.op);
       }
       //this.randOption();
@@ -62,7 +62,7 @@ export class ListOptionsComponent implements OnInit {
      //alert("random:" + rnd);
       console.log(rnd);  
       var oppp = this.options;
-      
+      oppp[rnd].format =1;
       oppp[rnd].premium = rnd;
       //alert(oppp[rnd]);
       //}  
