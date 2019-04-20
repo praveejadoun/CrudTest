@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Option } from '../models/option.model';
 import { OptionService } from './option.service';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-list-options',
@@ -8,7 +9,7 @@ import { OptionService } from './option.service';
   styleUrls: ['./list-options.component.css']
 })
 export class ListOptionsComponent implements OnInit {
-  
+  socket;
   op:Option={
     id : null,
     name:null,
@@ -23,15 +24,31 @@ export class ListOptionsComponent implements OnInit {
 
   }
   
+  
   options: Option[];
-  constructor(private _optionService:OptionService) { }
+  constructor(private _optionService:OptionService) {
+    this.socket = io("http://localhost:5000");
+   }
+
+   
 
   ngOnInit() {
     //this.options = this._optionService.getOption();
     this._optionService.getOption().subscribe(optionList=>{
       this.options=optionList;
     });
+    this.addOption();
 
+    this.socket.on('data1',(res)=>{
+      console.log("data emitted from server" + res.id +";" + ";" + res.name)
+    
+      
+      console.log(res.id);  
+      var oppp = this.options;
+      oppp[res.id].format = 1;//(Math.random()*0xFFFFFF<<0).toString(16);
+      oppp[res.id].premium = res.id * 5;
+        
+    });
   }
 
   editOption(option:Option){
@@ -68,6 +85,5 @@ export class ListOptionsComponent implements OnInit {
       //}  
       
   }
-
 
   }

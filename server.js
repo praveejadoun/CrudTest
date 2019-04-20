@@ -15,8 +15,8 @@ var option = {
     name:"new option",
     expiryDate:null,
     strikePrice:120,
-    premium:10
-    
+    premium:10,
+    format:0
   };
 
 app.use(express.static(path.join(__dirname,'dist/crudtest/')));
@@ -55,6 +55,10 @@ io.on('connection',(socket)=>{
 
 function senddata(socket)
 {
+    var rnd = Math.floor(Math.random() * 20) + 1
+    option.id = rnd;
+    option.premium = rnd ;
+    option.format = 1;//'#'+(Math.random()*0xFFFFFF<<0).toString(16); 
     socket.emit('data1',option);
 
     setTimeout(()=> {
@@ -62,7 +66,7 @@ function senddata(socket)
         senddata(socket);
         console.log("Hello from server");
         
-       },3000);
+       },1000);
 
 }
 
