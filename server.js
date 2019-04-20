@@ -32,15 +32,15 @@ io.on('connection',(socket)=>{
         console.log('user dis-connected');
         
     });
-
-    
     
 });
 
 function senddata(socket)
 {
     socket.emit('data1',"Hello from server");
+
     setTimeout(()=> {
+
         senddata(socket);
         console.log("Hello from server");
         
@@ -51,6 +51,4 @@ function senddata(socket)
 server.listen(port ,()=>{
     console.log('Server listenign on port ${port}');
 });
-
-
 
