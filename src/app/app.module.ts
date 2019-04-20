@@ -14,8 +14,9 @@ import { DisplayOptionComponent } from './options/display-option.component';
 import {OptionService} from './options/option.service'
 
 const appRoutes :Routes=[
-  { path:'list',component:ListEmployeesComponent},
   { path:'listOptions',component:ListOptionsComponent},
+  { path:'list',component:ListEmployeesComponent},
+  
   { path:'create', component:CreateEmployeeComponent,canDeactivate:[CreateEmployeeCanDeactivateGuardService]},
   { path:'', redirectTo:'/list',pathMatch:'full'}
 

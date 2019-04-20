@@ -15,7 +15,7 @@
             <th scope="col">Premium</th>
           </tr>
         </thead> 
-        <tbody *ngFor ="let option of options">
+        <tbody *ngFor ="let option of options;trackBy:trackByOptionCode">
                 <tr>
                   <th scope="row">{{option.id}}</th>
                   <td>{{option.name}}</td>
