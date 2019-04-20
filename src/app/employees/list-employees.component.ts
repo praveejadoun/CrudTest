@@ -19,7 +19,7 @@ export class ListEmployeesComponent implements OnInit {
   this.employees = this._employeeService.getEmployees();
   
   this.socket.on('data1',(res)=>{
-    console.log("data emitted" + res)});
+    console.log("data emitted" + res.id +";" + ";" + res.name)});
     
   }
 

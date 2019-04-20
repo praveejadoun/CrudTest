@@ -9,6 +9,16 @@ const port =  5000;
 
 var data= "test data";
 
+var option = {
+    
+    id : 0,
+    name:"new option",
+    expiryDate:null,
+    strikePrice:120,
+    premium:10
+    
+  };
+
 app.use(express.static(path.join(__dirname,'dist/crudtest/')));
 
 /* app.get('*',(req,res)=>{
@@ -45,7 +55,7 @@ io.on('connection',(socket)=>{
 
 function senddata(socket)
 {
-    socket.emit('data1',data);
+    socket.emit('data1',option);
 
     setTimeout(()=> {
 
