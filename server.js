@@ -25,13 +25,32 @@ const io = socketIO(server);
 
 io.on('connection',(socket)=>{
     console.log('new user connected');
+    
+    senddata(socket);
 
     socket.on('disconnect', ()=>{
         console.log('user dis-connected');
         
     });
+
+    
+    
 });
+
+function senddata(socket)
+{
+    socket.emit('data1',"Hello from server");
+    setTimeout(()=> {
+        senddata(socket);
+        console.log("Hello from server");
+        
+       },3000);
+
+}
 
 server.listen(port ,()=>{
     console.log('Server listenign on port ${port}');
 });
+
+
+

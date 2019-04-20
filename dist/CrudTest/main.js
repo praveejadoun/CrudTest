@@ -74,6 +74,11 @@ var AppComponent = /** @class */ (function () {
         this.title = 'Option Test';
         this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__();
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this.socket.on('data1', function (res) {
+            console.log("data emitted" + res);
+        });
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
