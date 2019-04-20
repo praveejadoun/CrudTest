@@ -18,6 +18,10 @@ export class ListOptionsComponent implements OnInit {
     
   };
   
+  trackByOptionCode(index:number,option:any):number{
+  return option.id;
+
+  }
   
   options: Option[];
   constructor(private _optionService:OptionService) { }

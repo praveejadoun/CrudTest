@@ -20,7 +20,13 @@ export class ListEmployeesComponent implements OnInit {
   
   this.socket.on('data1',(res)=>{
     console.log("data emitted" + res)});
-  
+    
+  }
+
+  sendata()
+  {
+    this.socket.emit('getdata',"client to server");
+    
   }
 
   editEmployee(employee:Employee){

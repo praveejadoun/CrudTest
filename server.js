@@ -7,6 +7,8 @@ const socketIO = require('socket.io');
 
 const port =  5000;
 
+var data= "test data";
+
 app.use(express.static(path.join(__dirname,'dist/crudtest/')));
 
 /* app.get('*',(req,res)=>{
@@ -33,11 +35,17 @@ io.on('connection',(socket)=>{
         
     });
     
+    socket.on('getdata', (data)=>{
+        
+        console.log("recd from client" + data);
+        //senddata(socket);
+        
+    });
 });
 
 function senddata(socket)
 {
-    socket.emit('data1',"Hello from server");
+    socket.emit('data1',data);
 
     setTimeout(()=> {
 
