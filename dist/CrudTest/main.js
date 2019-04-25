@@ -56,8 +56,6 @@ module.exports = "<div class=\"container\">\r\n<nav class=\"navbar navbar-defaul
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_1__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,16 +66,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
+//import * as io from 'socket.io-client';
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
         this.title = 'Option Test';
-        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__();
+        //this.socket = io("http://localhost:5000");
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.socket.on('data1', function (res) {
-            console.log("data emitted" + res);
-        });
+        //this.socket.on('data1',(res)=>{
+        //console.log("data emitted" + res);
+        //});
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -137,8 +135,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 var appRoutes = [
-    { path: 'list', component: _employees_list_employees_component__WEBPACK_IMPORTED_MODULE_3__["ListEmployeesComponent"] },
     { path: 'listOptions', component: _options_list_options_component__WEBPACK_IMPORTED_MODULE_10__["ListOptionsComponent"] },
+    { path: 'list', component: _employees_list_employees_component__WEBPACK_IMPORTED_MODULE_3__["ListEmployeesComponent"] },
     { path: 'create', component: _employees_create_employee_component__WEBPACK_IMPORTED_MODULE_4__["CreateEmployeeComponent"], canDeactivate: [_employees_create_employee_can_deactivate_guard_service__WEBPACK_IMPORTED_MODULE_9__["CreateEmployeeCanDeactivateGuardService"]] },
     { path: '', redirectTo: '/list', pathMatch: 'full' }
 ];
@@ -487,7 +485,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div  *ngFor =\"let employee of employees\">\n<app-display-employee [employee]=\"employee\"></app-display-employee>   \n<button (click)=\"editEmployee(employee)\">editEmployee</button>\n</div>\n"
+module.exports = "\n<button (click)=\"sendata()\">send data</button>\n\n<div  *ngFor =\"let employee of employees\">\n<app-display-employee [employee]=\"employee\"></app-display-employee>   \n<button (click)=\"editEmployee(employee)\">editEmployee</button>\n</div>\n"
 
 /***/ }),
 
@@ -503,6 +501,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ListEmployeesComponent", function() { return ListEmployeesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _employee_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./employee.service */ "./src/app/employees/employee.service.ts");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -514,12 +514,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var ListEmployeesComponent = /** @class */ (function () {
     function ListEmployeesComponent(_employeeService) {
         this._employeeService = _employeeService;
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2__("http://localhost:5000");
     }
     ListEmployeesComponent.prototype.ngOnInit = function () {
         this.employees = this._employeeService.getEmployees();
+        this.socket.on('data1', function (res) {
+            console.log("data emitted" + res.id + ";" + ";" + res.name);
+        });
+    };
+    ListEmployeesComponent.prototype.sendata = function () {
+        this.socket.emit('getdata', "client to server");
     };
     ListEmployeesComponent.prototype.editEmployee = function (employee) {
         this._employeeService.editEmployees(employee);
@@ -666,7 +674,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<button (click)=\"addOption(option)\">New Option</button>\n<button (click)=\"randOption()\">Random Option</button>\n\n\n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n  \n  <table class=\"table\" border=\"1\">\n        <thead class=\"thead-dark\">\n          <tr>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Strike Price</th>\n            <th scope=\"col\">Premium</th>\n          </tr>\n        </thead> \n        <tbody *ngFor =\"let option of options\">\n                <tr>\n                  <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.name}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.strikePrice}}</td>\n                  <td>{{option.premium}}</td>\n                </tr>\n                \n              </tbody>\n            </table>\n\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
+module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-->\n<button (click)=\"randOption()\">Calculate Price</button>\n\n\n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n  \n  <table class=\"table\" border=\"1\">\n        <thead class=\"thead-dark\">\n          <tr>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Strike Price</th>\n            <th scope=\"col\">Premium</th>\n          </tr>\n        </thead> \n        <tbody *ngFor =\"let option of options;trackBy:trackByOptionCode\">\n                <tr [style.background-color]=\"option.format == 1 ? 'yellow' : 'white'\">\n                  <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.name}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.strikePrice}}</td>\n                  <td>{{option.premium}}</td>\n                  \n                </tr>\n                \n              </tbody>\n            </table>\n\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
 
 /***/ }),
 
@@ -683,6 +691,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _models_option_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/option.model */ "./src/app/models/option.model.ts");
 /* harmony import */ var _option_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./option.service */ "./src/app/options/option.service.ts");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_3__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -695,6 +705,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ListOptionsComponent = /** @class */ (function () {
     function ListOptionsComponent(_optionService) {
         this._optionService = _optionService;
@@ -703,14 +714,27 @@ var ListOptionsComponent = /** @class */ (function () {
             name: null,
             expiryDate: null,
             strikePrice: null,
-            premium: 10
+            premium: 10,
+            format: 0
         };
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_3__("http://localhost:5000");
     }
+    ListOptionsComponent.prototype.trackByOptionCode = function (index, option) {
+        return option.id;
+    };
     ListOptionsComponent.prototype.ngOnInit = function () {
         var _this = this;
         //this.options = this._optionService.getOption();
         this._optionService.getOption().subscribe(function (optionList) {
             _this.options = optionList;
+        });
+        this.addOption();
+        this.socket.on('data1', function (res) {
+            console.log("data emitted from server" + res.id + ";" + ";" + res.name);
+            console.log(res.id);
+            var oppp = _this.options;
+            oppp[res.id].format = 1; //(Math.random()*0xFFFFFF<<0).toString(16);
+            oppp[res.id].premium = res.id * 5;
         });
     };
     ListOptionsComponent.prototype.editOption = function (option) {
@@ -725,6 +749,7 @@ var ListOptionsComponent = /** @class */ (function () {
             this.op.expiryDate = new Date('12/25/1988');
             this.op.premium = i * 10;
             this.op.strikePrice = i * 100;
+            this.op.format = 0;
             this._optionService.newOption(this.op);
         }
         //this.randOption();
@@ -737,6 +762,7 @@ var ListOptionsComponent = /** @class */ (function () {
         //alert("random:" + rnd);
         console.log(rnd);
         var oppp = this.options;
+        oppp[rnd].format = 1;
         oppp[rnd].premium = rnd;
         //alert(oppp[rnd]);
         //}  
@@ -784,7 +810,8 @@ var OptionService = /** @class */ (function () {
                 name: 'OP-1',
                 expiryDate: new Date('10/25/1988'),
                 strikePrice: 300,
-                premium: 10
+                premium: 10,
+                format: 0
             }
         ];
     }
@@ -796,6 +823,7 @@ var OptionService = /** @class */ (function () {
     };
     OptionService.prototype.editOption = function (option) {
         option.name = "Option  changed";
+        option.format = 1;
     };
     OptionService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
