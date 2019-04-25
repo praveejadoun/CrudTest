@@ -64,13 +64,13 @@ function senddata(socket)
     setTimeout(()=> {
 
         senddata(socket);
-        console.log("Hello from server");
+        console.log("Data From Server opId :" + option.id);
         
        },1000);
 
 }
 
 server.listen(port ,()=>{
-    console.log('Server listenign on port ${port}');
+    console.log(`Server listenign on port ${port}`);
 });
 
