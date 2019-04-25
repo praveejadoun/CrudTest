@@ -64,7 +64,7 @@ function senddata(socket)
     setTimeout(()=> {
 
         senddata(socket);
-        console.log("Data From Server opId :" + option.id);
+        console.log("Data From Server opId :" + option.id + "Price:" + option.premium);
         
        },1000);
 
