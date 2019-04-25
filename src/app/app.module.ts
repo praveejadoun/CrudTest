@@ -15,10 +15,10 @@ import {OptionService} from './options/option.service'
 
 const appRoutes :Routes=[
   { path:'listOptions',component:ListOptionsComponent},
-  { path:'list',component:ListEmployeesComponent},
+  // { path:'list',component:ListEmployeesComponent},
   
-  { path:'create', component:CreateEmployeeComponent,canDeactivate:[CreateEmployeeCanDeactivateGuardService]},
-  { path:'', redirectTo:'/list',pathMatch:'full'}
+  //{ path:'create', component:CreateEmployeeComponent,canDeactivate:[CreateEmployeeCanDeactivateGuardService]},
+  { path:'', redirectTo:'/listOptions',pathMatch:'full'}
 
 ];
 

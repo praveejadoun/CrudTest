@@ -41,7 +41,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n<nav class=\"navbar navbar-default\">\r\n    <ul class=\"nav navbar-nav\">\r\n        <li>\r\n            <a routerLink=\"listOptions\">Listoption</a>\r\n        </li>\r\n        <li>\r\n            <a routerLink=\"list\">List</a>\r\n        </li>\r\n        <li>\r\n            <a routerLink=\"create\">Create</a>\r\n        </li> \r\n        <li>\r\n            <a routerLink=\"edit\">edit</a>\r\n        </li>    \r\n    </ul>\r\n</nav>\r\n<router-outlet></router-outlet>\r\n</div>\r\n<!--<div class=\"container\">\r\n<app-list-employees></app-list-employees>\r\n</div> -->"
+module.exports = "<div class=\"container\">\r\n<nav class=\"navbar navbar-default\">\r\n    <ul class=\"nav navbar-nav\">\r\n        <li>\r\n            <a routerLink=\"listOptions\">Listoption</a>\r\n        </li>\r\n       <!--  <li>\r\n            <a routerLink=\"list\">List</a>\r\n        </li>\r\n        <li>\r\n            <a routerLink=\"create\">Create</a>\r\n        </li> \r\n        <li>\r\n            <a routerLink=\"edit\">edit</a>\r\n        </li>    --> \r\n    </ul>\r\n</nav>\r\n<router-outlet></router-outlet>\r\n</div>\r\n<!--<div class=\"container\">\r\n<app-list-employees></app-list-employees>\r\n</div> -->"
 
 /***/ }),
 
@@ -136,9 +136,9 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 var appRoutes = [
     { path: 'listOptions', component: _options_list_options_component__WEBPACK_IMPORTED_MODULE_10__["ListOptionsComponent"] },
-    { path: 'list', component: _employees_list_employees_component__WEBPACK_IMPORTED_MODULE_3__["ListEmployeesComponent"] },
-    { path: 'create', component: _employees_create_employee_component__WEBPACK_IMPORTED_MODULE_4__["CreateEmployeeComponent"], canDeactivate: [_employees_create_employee_can_deactivate_guard_service__WEBPACK_IMPORTED_MODULE_9__["CreateEmployeeCanDeactivateGuardService"]] },
-    { path: '', redirectTo: '/list', pathMatch: 'full' }
+    // { path:'list',component:ListEmployeesComponent},
+    //{ path:'create', component:CreateEmployeeComponent,canDeactivate:[CreateEmployeeCanDeactivateGuardService]},
+    { path: '', redirectTo: '/listOptions', pathMatch: 'full' }
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
