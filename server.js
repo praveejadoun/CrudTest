@@ -19,15 +19,15 @@ var option = {
     format:0
   };
 
-app.use(express.static(path.join(__dirname,'dist/crudtest/')));
+app.use(express.static(path.join(__dirname,'dist/CrudTest/')));
 
 /* app.get('*',(req,res)=>{
-    res.sendfile(path.join(__dirname,'dist/crudtest/index.html'));
+    res.sendfile(path.join(__dirname,'dist/Crudtest/index.html'));
 
 }); */
 
 app.get('*',function(req, res){//get,put,post,delete   
-    res.sendFile(__dirname + '/dist/crudtest/index.html');
+    res.sendFile(__dirname + '/dist/CrudeTst/index.html');
     //console.log
   });
 
