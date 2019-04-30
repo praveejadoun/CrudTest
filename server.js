@@ -8,15 +8,17 @@ const socketIO = require('socket.io');
 const port =  5000;
 
 var data= "test data";
-
 var option = {
     
     id : 0,
-    name:"new option",
+    optionName:"new option",
+    strike:120,
+    volatility:1,
     expiryDate:null,
-    strikePrice:120,
+
     premium:10,
-    format:0
+    format:0,
+    formatColor:"White"
   };
 
 app.use(express.static(path.join(__dirname,'dist/crudtest/')));
@@ -55,9 +57,10 @@ io.on('connection',(socket)=>{
 
 function senddata(socket)
 {
-    var rnd = Math.floor(Math.random() * 20) + 1
+    var rnd = Math.floor(Math.random() * 97)+ 1;
+    var rnd2 = Math.floor(Math.random() *4)+1 
     option.id = rnd;
-    option.premium = rnd ;
+    option.premium = rnd2 ;
     option.format = 1;//'#'+(Math.random()*0xFFFFFF<<0).toString(16); 
     socket.emit('data1',option);
 
@@ -66,7 +69,7 @@ function senddata(socket)
         senddata(socket);
         console.log("Data From Server opId :" + option.id + "Price:" + option.premium);
         
-       },1000);
+       },20);
 
 }
 

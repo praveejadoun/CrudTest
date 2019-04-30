@@ -10,16 +10,18 @@ import { ObserveOnOperator } from '../../../node_modules/rxjs/internal/operators
 })
 export class OptionService {
 
-  private listOption:Option[]=[
-    {
-      id : 1,
-      name:'OP-1',
-      expiryDate:new Date('10/25/1988'),
-      strikePrice:300,
-      premium:10,
-      format:0
-    } 
-  ];
+   private listOption:Option[]=[];
+  //=[
+  //   {
+  //     id : 1,
+  //     name:'OP-1',
+  //     expiryDate:new Date('10/25/1988'),
+  //     strikePrice:300,
+  //     premium:10,
+  //     format:0,
+  //     formatColor:"White"
+  //   } 
+  // ];
 
  public getOption():Observable<Option[]>{
       return  of(this.listOption);
@@ -31,7 +33,7 @@ public newOption(option:Option):void{
 }
 
 public editOption(option:Option):void{
-  option.name = "Option  changed";
+  option.optionName = "Option  changed";
   option.format = 1;
   
 }

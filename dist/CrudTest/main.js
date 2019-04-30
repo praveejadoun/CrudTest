@@ -577,6 +577,15 @@ var Employee = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Option", function() { return Option; });
+// export class Option {
+//     id : number;
+//     name:string;
+//     expiryDate:Date;
+//     strikePrice?:number;
+//     premium?:number;
+//     format:number;
+//     formatColor:string;
+// }
 var Option = /** @class */ (function () {
     function Option() {
     }
@@ -674,7 +683,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-->\n<button (click)=\"randOption()\">Calculate Price</button>\n\n\n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n  \n  <table class=\"table\" border=\"1\">\n        <thead class=\"thead-dark\">\n          <tr>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Strike Price</th>\n            <th scope=\"col\">Premium</th>\n          </tr>\n        </thead> \n        <tbody *ngFor =\"let option of options;trackBy:trackByOptionCode\">\n                <tr [style.background-color]=\"option.format == 1 ? 'yellow' : 'white'\">\n                  <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.name}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.strikePrice}}</td>\n                  <td>{{option.premium}}</td>\n                  \n                </tr>\n                \n              </tbody>\n            </table>\n\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
+module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-->\n<!--<button (click)=\"randOption()\">Calculate Price</button>-->\n\n\n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n  \n  <table class=\"table\" border=\"1\">\n        <thead class=\"thead-dark\">\n          <tr>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Strike Price</th>\n            <th scope=\"col\">Volatility</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Premium</th>\n          </tr>\n        </thead> \n        <tbody *ngFor =\"let option of options;trackBy:trackByOptionCode\">\n              \n          <tr *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">\n                  <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.premium}}</td>\n          </tr>\n          <tr *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">\n            <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.premium}}</td>\n        </tr>\n          <tr *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">\n            <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.premium}}</td>\n        </tr>\n        </tbody>\n        </table>\n\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
 
 /***/ }),
 
@@ -693,6 +702,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _option_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./option.service */ "./src/app/options/option.service.ts");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -706,18 +716,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ListOptionsComponent = /** @class */ (function () {
     function ListOptionsComponent(_optionService) {
         this._optionService = _optionService;
-        this.op = {
-            id: null,
-            name: null,
-            expiryDate: null,
-            strikePrice: null,
-            premium: 10,
-            format: 0
-        };
-        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_3__("http://localhost:5000");
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_3__(src_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].webSocketURL);
     }
     ListOptionsComponent.prototype.trackByOptionCode = function (index, option) {
         return option.id;
@@ -733,23 +736,31 @@ var ListOptionsComponent = /** @class */ (function () {
             console.log("data emitted from server" + res.id + ";" + ";" + res.name);
             console.log(res.id);
             var oppp = _this.options;
-            oppp[res.id].format = 1; //(Math.random()*0xFFFFFF<<0).toString(16);
-            oppp[res.id].premium = res.id * 5;
+            if (res.premium >= oppp[res.id].premium)
+                oppp[res.id].formatColor = "Red";
+            else if (res.premium == oppp[res.id].premium)
+                oppp[res.id].formatColor = "White";
+            else
+                oppp[res.id].formatColor = "Green";
+            oppp[res.id].premium = res.premium;
+            console.log(oppp[res.id].formatColor);
         });
     };
     ListOptionsComponent.prototype.editOption = function (option) {
         this._optionService.editOption(option);
     };
     ListOptionsComponent.prototype.addOption = function () {
-        var len = this.options.length;
-        for (var i = len + 1; i < len + 22; i++) {
+        //var len = this.options.length;
+        for (var i = 1; i < 100; i++) {
             this.op = new _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
-            this.op.name = "OP-" + i;
-            this.op.id = i;
+            this.op.id = i.toString();
+            this.op.optionName = "AAPL190412C00130000-" + i;
+            this.op.strike = i * 100;
+            this.op.volatility = .05;
             this.op.expiryDate = new Date('12/25/1988');
             this.op.premium = i * 10;
-            this.op.strikePrice = i * 100;
             this.op.format = 0;
+            this.op.formatColor = "White";
             this._optionService.newOption(this.op);
         }
         //this.randOption();
@@ -804,17 +815,19 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 var OptionService = /** @class */ (function () {
     function OptionService() {
-        this.listOption = [
-            {
-                id: 1,
-                name: 'OP-1',
-                expiryDate: new Date('10/25/1988'),
-                strikePrice: 300,
-                premium: 10,
-                format: 0
-            }
-        ];
+        this.listOption = [];
     }
+    //=[
+    //   {
+    //     id : 1,
+    //     name:'OP-1',
+    //     expiryDate:new Date('10/25/1988'),
+    //     strikePrice:300,
+    //     premium:10,
+    //     format:0,
+    //     formatColor:"White"
+    //   } 
+    // ];
     OptionService.prototype.getOption = function () {
         return Object(_node_modules_rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.listOption);
     };
@@ -822,7 +835,7 @@ var OptionService = /** @class */ (function () {
         this.listOption.push(option);
     };
     OptionService.prototype.editOption = function (option) {
-        option.name = "Option  changed";
+        option.optionName = "Option  changed";
         option.format = 1;
     };
     OptionService = __decorate([
@@ -851,7 +864,8 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 var environment = {
-    production: false
+    production: false,
+    webSocketURL: 'http://localhost:5000'
 };
 /*
  * For easier debugging in development mode, you can import the following file
