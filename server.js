@@ -13,10 +13,10 @@ const port =  5000;
 // var MessageConsumer = function MessageConsumer(){};
 
 // MessageConsumer.prototype.init = function init(){
-//     var stompClient = new Stomp('ws://localhost:61614/stomp', 61614, 'guest', 'guest');
+//     var stompClient = new Stomp('tcp://nimbus/', 61616, 'guest', 'guest');
 //     stompClient.connect(function(sessionId)
 //     {
-//       stompClient.subscribe('/queue/test', function(body, headers)
+//       stompClient.subscribe('CMT.OPTION.PRICE.TOPIC, function(body, headers)
 //       {
 //         /*
 //         this callback function is invoked whenever our a client receives a message.
@@ -145,7 +145,7 @@ function senddata(socket)
          senddata(socket);
         console.log("Data From Server opId :" + option.id + "Price:" + option.premium);
         
-        },20);
+        },200);
 
 }
 
