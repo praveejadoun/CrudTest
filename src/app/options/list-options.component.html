@@ -4,8 +4,14 @@
 
 <!--<div  *ngFor ="let option of options">-->
   <!--  <button (click)="editOption(option)">editOption</button> !-->
-  
-  <table class="table" border="1">
+  <div>
+    <label>Min Time: {{minTime | date:'yyyy-MM-dd'}}</label>
+    <label> Max Time: {{maxTime | date:'yyyy-MM-dd'}}</label>
+    <label>Total Time: {{totalTime}}</label>
+
+  </div>
+  <div  class ="container">
+    <table class="table table-bordered tabl>e-striped" >
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
@@ -16,7 +22,10 @@
             <th scope="col">Premium</th>
           </tr>
         </thead> 
-        <tbody *ngFor ="let option of options;trackBy:trackByOptionCode">
+
+        
+         <tbody *ngFor ="let option of options  | paginate: {  id:'listing_pagination', itemsPerPage: 25, currentPage: page };trackBy:trackByOptionCode"> 
+          <!-- <tbody *ngFor ="let option of options;trackBy:trackByOptionCode">  -->
               
           <tr *ngIf="option.formatColor === 'White'" [style.background-color]="'white'">
                   <th scope="row">{{option.id}}</th>
@@ -44,6 +53,9 @@
         </tr>
         </tbody>
         </table>
-
+        <div>
+           <pagination-controls  id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+        </div>
+      </div>
     <!--<app-display-option [option]="option"></app-display-option>-->   
 <!--</div>-->

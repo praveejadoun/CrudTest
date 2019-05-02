@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Option } from '../models/option.model';
 import { OptionService } from './option.service';
 import * as io from 'socket.io-client';
@@ -6,12 +6,18 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-list-options',
   templateUrl: './list-options.component.html',
-  styleUrls: ['./list-options.component.css']
+  styleUrls: ['./list-options.component.css'],
+  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListOptionsComponent implements OnInit {
   socket;
   op:Option;
-  
+  minTime:any = Date.now();
+  maxTime:any=Date.now();
+  totalTime:any;
+  totalRec : number = 100;
+  page: number = 1;
+
   trackByOptionCode(index:number,option:any):number{
   return option.id;
 
@@ -27,6 +33,8 @@ export class ListOptionsComponent implements OnInit {
    
 
   ngOnInit() {
+    this.page=1;
+    this.totalRec =100;
     //this.options = this._optionService.getOption();
     this._optionService.getOption().subscribe(optionList=>{
       this.options=optionList;

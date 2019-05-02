@@ -13,7 +13,7 @@ export class Option {
      optionName:string;
      strike:number
      volatility:number;
-     expiryDate:Date;
+     expiryDate: Date;
      premium?:number;
      format:number;
      formatColor:string;

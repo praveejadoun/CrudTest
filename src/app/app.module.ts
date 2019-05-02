@@ -12,6 +12,8 @@ import { CreateEmployeeCanDeactivateGuardService } from './employees/create-empl
 import { ListOptionsComponent } from './options/list-options.component';
 import { DisplayOptionComponent } from './options/display-option.component';
 import {OptionService} from './options/option.service'
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 const appRoutes :Routes=[
   { path:'listOptions',component:ListOptionsComponent},
@@ -36,7 +38,8 @@ const appRoutes :Routes=[
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    FormsModule
+    FormsModule,
+    NgxPaginationModule,
    ],
   providers: [EmployeeService,CreateEmployeeCanDeactivateGuardService,OptionService],
   bootstrap: [AppComponent]

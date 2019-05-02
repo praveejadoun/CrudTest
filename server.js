@@ -140,12 +140,12 @@ function senddata(socket)
     option.format = 1;//'#'+(Math.random()*0xFFFFFF<<0).toString(16); 
     socket.emit('data1',option);
 
-    // setTimeout(()=> {
+     setTimeout(()=> {
 
-    //     senddata(socket);
-    //     console.log("Data From Server opId :" + option.id + "Price:" + option.premium);
+         senddata(socket);
+        console.log("Data From Server opId :" + option.id + "Price:" + option.premium);
         
-    //    },20);
+        },20);
 
 }
 
