@@ -28,12 +28,12 @@ const port =  5000;
 //   };
 
 const connectOptions = {
-    'host': 'localhost',
-    'port': 61613,
+    'host': 'nimbus',
+    'port': 61616,
     'connectHeaders':{
       'host': '/stomp',
-      'login': 'guest',
-      'passcode': 'guest',
+      'login': '',
+      'passcode': '',
       'heart-beat': '5000,5000'
     }
   };
@@ -56,7 +56,7 @@ const connectOptions = {
     frame.end();
     
     const subscribeHeaders = {
-      'destination': '/queue/test',
+      'destination': 'CMT.OPTION.PRICE.TOPIC',
       'ack': 'client-individual'
     };
     
