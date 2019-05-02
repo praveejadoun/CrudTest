@@ -31,7 +31,7 @@ const connectOptions = {
     'host': 'nimbus',
     'port': 61616,
     'connectHeaders':{
-      'host': '/stomp',
+      'host': '',
       'login': '',
       'passcode': '',
       'heart-beat': '5000,5000'
