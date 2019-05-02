@@ -3,6 +3,7 @@ import { Option } from '../models/option.model';
 import { OptionService } from './option.service';
 import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
+import { DatePipe,formatDate } from '@angular/common';
 @Component({
   selector: 'app-list-options',
   templateUrl: './list-options.component.html',
@@ -34,7 +35,7 @@ export class ListOptionsComponent implements OnInit {
 
   ngOnInit() {
     this.page=1;
-    this.totalRec =100;
+    //this.totalRec =100;
     //this.options = this._optionService.getOption();
     this._optionService.getOption().subscribe(optionList=>{
       this.options=optionList;
@@ -74,6 +75,8 @@ export class ListOptionsComponent implements OnInit {
       this.op.volatility = .05;
       this.op.expiryDate = new Date('12/25/1988')
       this.op.premium = i*10;
+      this.op.pricedOn =  formatDate(Date.now(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '');
+      
       this.op.format=0;
       this.op.formatColor="White";
       this._optionService.newOption(this.op);

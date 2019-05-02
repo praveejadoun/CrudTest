@@ -15,7 +15,7 @@ export class Option {
      volatility:number;
      expiryDate: Date;
      premium?:number;
-     pricedOn:Date;
+     pricedOn:string;
      format:number;
      formatColor:string;
  }
