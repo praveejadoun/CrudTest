@@ -1,12 +1,12 @@
 <!--<button (click)="addOption(option)">New Option</button>-->
 <!--<button (click)="randOption()">Calculate Price</button>-->
-
+ 
 
 <!--<div  *ngFor ="let option of options">-->
   <!--  <button (click)="editOption(option)">editOption</button> !-->
   <div>
-    <label>Min Time: {{minTime | date:'yyyy-MM-dd'}}</label>
-    <label> Max Time: {{maxTime | date:'yyyy-MM-dd'}}</label>
+    <label>Min Time: {{minTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>
+    <label> Max Time: {{maxTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>
     <label>Total Time: {{totalTime}}</label>
 
   </div>
@@ -14,42 +14,57 @@
     <table class="table table-bordered tabl>e-striped" >
         <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
+            
+            <th scope="col">Stock Name</th>
             <th scope="col">Option Name</th>
-            <th scope="col">Strike Price</th>
-            <th scope="col">Volatility</th>
+            <th scope="col">Strike</th>
+            <th scope="col">volatility</th>
             <th scope="col">Expiry Date</th>
-            <th scope="col">Premium</th>
+            <th scope="col">Stock Price</th>
+            <th scope="col">Option Price</th>
+            
+            <th scope="col">Last Update Time</th>
           </tr>
         </thead> 
 
         
          <tbody *ngFor ="let option of options  | paginate: {  id:'listing_pagination', itemsPerPage: 25, currentPage: page };trackBy:trackByOptionCode"> 
           <!-- <tbody *ngFor ="let option of options;trackBy:trackByOptionCode">  -->
-              
+                          
           <tr *ngIf="option.formatColor === 'White'" [style.background-color]="'white'">
-                  <th scope="row">{{option.id}}</th>
+                  <th scope="row">{{option.stockName}}</th>
                   <td>{{option.optionName}}</td>
                   <td>{{option.strike}}</td>
                   <td>{{option.volatility}}</td>
                   <td>{{option.expiryDate | date}}</td>
-                  <td>{{option.premium}}</td>
+                  <td>{{option.stockPrice}}</td>
+                  <td>{{option.optionPrice}}</td>
+                  <!-- <td *ngIf="option.formatColor === 'White'" [style.background-color]="'white'">{{option.optionPrice}}</td>
+                  <td *ngIf="option.formatColor === 'Green'" [style.background-color]="'green'">{{option.optionPrice}}</td>
+                  <td *ngIf="option.formatColor === 'Red'" [style.background-color]="'red'">{{option.optionPrice}}</td>
+                  -->
+                  <td >{{option.lastUpdatedTime | date}}</td>
           </tr>
           <tr *ngIf="option.formatColor === 'Green'" [style.background-color]="'green'">
-            <th scope="row">{{option.id}}</th>
+            <th scope="row">{{option.stockName}}</th>
                   <td>{{option.optionName}}</td>
                   <td>{{option.strike}}</td>
                   <td>{{option.volatility}}</td>
                   <td>{{option.expiryDate | date}}</td>
-                  <td>{{option.premium}}</td>
+                  <td>{{option.stockPrice}}</td>
+                  <td>{{option.optionPrice}}</td>
+                  <td>{{option.lastUpdatedTime | date}}</td>
         </tr>
           <tr *ngIf="option.formatColor === 'Red'" [style.background-color]="'red'">
-            <th scope="row">{{option.id}}</th>
+            <th scope="row">{{option.stockName}}</th>
                   <td>{{option.optionName}}</td>
                   <td>{{option.strike}}</td>
                   <td>{{option.volatility}}</td>
                   <td>{{option.expiryDate | date}}</td>
-                  <td>{{option.premium}}</td>
+                  <td>{{option.stockPrice}}</td>
+                  <td>{{option.optionPrice}}</td>
+                 
+                  <td>{{option.lastUpdatedTime | date}}</td>
         </tr>
         </tbody>
         </table>

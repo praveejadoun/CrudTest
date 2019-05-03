@@ -8,14 +8,17 @@
 //     formatColor:string;
 // }
 
+
 export class Option {
      id :string;
+     stockName:string;
      optionName:string;
      strike:number
      volatility:number;
      expiryDate: Date;
-     premium?:number;
-     pricedOn:string;
+     stockPrice:number;
+     optionPrice:number;
+     lastUpdatedTime:string;
      format:number;
      formatColor:string;
  }

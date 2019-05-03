@@ -1,6 +1,6 @@
 /// 3.17.59.95
 //ssh -i atiraj_aws.pem ec2-user@3.17.59.95
-//localhost : 8161 for ActiveMq
+//localhost:8161 for ActiveMq
 
 const express = require('express');
 var Stomp = require('stomp-client');
@@ -14,22 +14,26 @@ const socketIO = require('socket.io');
 
 const port =  5000;
 
-// var MessageConsumer = function MessageConsumer(){};
+var data= "test data";
+var option = {
+    
+  id :'',
+  stockName:'',
+  optionName:'',
+  strike:0,
+  volatility:0,
+  expiryDate: '',
+  stockPrice:0,
+  optionPrice:0,
+  lastUpdatedTime:'',
+  format:0,
+  formatColor:''
+  };
 
-// MessageConsumer.prototype.init = function init(){
-//     var stompClient = new Stomp('locahhost',  '', '','');
-//     stompClient.connect(function(sessionId)
-//     {
-//       stompClient.subscribe('CMT.MARKET.DATA.TICKER.QUEUE', function(body, headers)
-//       {
-//         /*
-//         this callback function is invoked whenever our a client receives a message.
-//         */
-//        console.log("recd message from stomp");
-//       });
-//     });
-  
-//   };
+const server = http.createServer(app);
+
+const io = socketIO(server);
+
 
 const connectOptions = {
     //'host': 'nimbus',
@@ -44,7 +48,10 @@ const connectOptions = {
     }
   };
 
+  io.on('connection',(socket)=>{
+    console.log('new user connected');
 
+    //Start Stomp
   stompit.connect(connectOptions, function(error, client) {
   
     if (error) {
@@ -78,28 +85,35 @@ const connectOptions = {
         }
         
         console.log('received message: ' + body);
-        
-        client.ack(message);
-        
+        senddata(socket);  
+        setTimeout(()=> {
+          client.ack(message);
+         },200);
+
+                
         //client.disconnect();
         //client.connect();
       });
     });
   });
+//End Stomp
 
-var data= "test data";
-var option = {
+
+    //senddata(socket);
+
+    socket.on('disconnect', ()=>{
+        console.log('user dis-connected');
+        
+    });
     
-    id : 0,
-    optionName:"new option",
-    strike:120,
-    volatility:1,
-    expiryDate:null,
+    socket.on('getdata', (data)=>{
+        
+        console.log("recd from client" + data);
+        senddata(socket);
+        
+    });
+});
 
-    premium:10,
-    format:0,
-    formatColor:"White"
-  };
 
 app.use(express.static(path.join(__dirname,'dist/crudtest/')));
 
@@ -113,43 +127,34 @@ app.get('*',function(req, res){//get,put,post,delete
     //console.log
   });
 
-const server = http.createServer(app);
 
-const io = socketIO(server);
-
-io.on('connection',(socket)=>{
-    console.log('new user connected');
-    
-    senddata(socket);
-
-    socket.on('disconnect', ()=>{
-        console.log('user dis-connected');
-        
-    });
-    
-    socket.on('getdata', (data)=>{
-        
-        console.log("recd from client" + data);
-        //senddata(socket);
-        
-    });
-});
 
 function senddata(socket)
 {
     var rnd = Math.floor(Math.random() * 97)+ 1;
-    var rnd2 = Math.floor(Math.random() *4)+1 
-    option.id = rnd;
-    option.premium = rnd2 ;
-    option.format = 1;//'#'+(Math.random()*0xFFFFFF<<0).toString(16); 
-    socket.emit('data1',option);
+    var rnd2 = Math.floor(Math.random() *4)+1
+    
+    option.stockName = "AAPL" + rnd;
+      option.optionName = "AAPL190412C00130000-" + rnd;
+      
+      option.strike = rnd*100;
+      option.volatility = .05;
+      option.expiryDate = new Date('12/25/1988');
+      option.stockPrice = 100;
+      option.optionPrice = rnd2 * rnd;
+      option.lastUpdatedTime =  Date.now().toString();
+      
+      option.format=0;
+      option.formatColor="White";
+       
+      socket.emit('data1',option);
 
-     setTimeout(()=> {
+    //  setTimeout(()=> {
 
-         senddata(socket);
-        console.log("Data From Server opId :" + option.id + "Price:" + option.premium);
+    //      senddata(socket);
+         console.log("Data From Server opId :" + option.optionName + "Price:" + option.optionPrice);
         
-        },200);
+    //     },200);
 
 }
 
