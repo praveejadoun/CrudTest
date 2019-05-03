@@ -1,3 +1,7 @@
+/// 3.17.59.95
+//ssh -i atiraj_aws.pem ec2-user@3.17.59.95
+//localhost : 8161 for ActiveMq
+
 const express = require('express');
 var Stomp = require('stomp-client');
 const stompit = require('stompit');
@@ -13,10 +17,10 @@ const port =  5000;
 // var MessageConsumer = function MessageConsumer(){};
 
 // MessageConsumer.prototype.init = function init(){
-//     var stompClient = new Stomp('tcp://nimbus/', 61616, 'guest', 'guest');
+//     var stompClient = new Stomp('locahhost',  '', '','');
 //     stompClient.connect(function(sessionId)
 //     {
-//       stompClient.subscribe('CMT.OPTION.PRICE.TOPIC, function(body, headers)
+//       stompClient.subscribe('CMT.MARKET.DATA.TICKER.QUEUE', function(body, headers)
 //       {
 //         /*
 //         this callback function is invoked whenever our a client receives a message.
@@ -24,17 +28,19 @@ const port =  5000;
 //        console.log("recd message from stomp");
 //       });
 //     });
-    
+  
 //   };
 
 const connectOptions = {
-    'host': 'nimbus',
-    'port': 61616,
+    //'host': 'nimbus',
+    //'port': 61613,
+    'host': 'localhost',
+    
     'connectHeaders':{
       'host': '',
       'login': '',
-      'passcode': '',
-      'heart-beat': '5000,5000'
+      'passcode': ''//,
+      //'heart-beat': '5000,5000'
     }
   };
 
@@ -46,20 +52,17 @@ const connectOptions = {
       return;
     }
     
-    const sendHeaders = {
-      'destination': '/queue/test',
-      'content-type': 'text/plain'
-    };
-    
-    const frame = client.send(sendHeaders);
-    frame.write('hello');
-    frame.end();
     
     const subscribeHeaders = {
-      'destination': 'CMT.OPTION.PRICE.TOPIC',
+      'destination': 'CMT.MARKET.DATA.TICKER.QUEUE',
       'ack': 'client-individual'
     };
     
+    client.on('error', (error) => {
+      console.log("Error:" + error.message);
+        client.connect();
+    });
+
     client.subscribe(subscribeHeaders, function(error, message) {
       
       if (error) {
@@ -78,7 +81,8 @@ const connectOptions = {
         
         client.ack(message);
         
-        client.disconnect();
+        //client.disconnect();
+        //client.connect();
       });
     });
   });

@@ -24,6 +24,7 @@
     "core-js": "^2.5.4",
     "express": "^4.16.4",
     "ngx-pagination": "^3.2.1",
+    "node-redis-pubsub": "^4.0.0",
     "rxjs": "~6.3.3",
     "socket.io": "^2.2.0",
     "stomp-client": "^0.9.0",
