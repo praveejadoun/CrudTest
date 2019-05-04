@@ -9,7 +9,7 @@
 
 
 const express = require('express');
-var Stomp = require('stomp-client');
+//var Stomp = require('stomp-client');
 const stompit = require('stompit');
 
 const app = express();
@@ -20,7 +20,7 @@ const socketIO = require('socket.io');
 
 const port =  5000;
 
-var data= "test data";
+//var data= "test data";
 var option = {
     
   id :'',
@@ -121,6 +121,7 @@ const connectOptions = {
     
     socket.on('getdata', (data)=>{
         
+
         console.log("recd from client" + data);
         senddata(socket,'');
         
@@ -135,7 +136,7 @@ app.use(express.static(path.join(__dirname,'dist/crudtest/')));
 
 }); */
 
-app.get('*',function(req, res){//get,put,post,delete   
+app.get('/listOptions',function(req, res){//get,put,post,delete   
     res.sendFile(__dirname + '/dist/crudtest/index.html');
     //console.log
   });
@@ -155,6 +156,7 @@ function senddata(socket,body)
         body.options[0].format=0;
         //body.options[0].formatColor = "White";
         socket.emit('data1',body.options[0]);
+        //socket.senddata('data1',body.options[0]);
         console.log("Data sent From Server opName :" + body.options[0].optionName + "   opPrice:" + body.options[0].optionPrice);
     
        

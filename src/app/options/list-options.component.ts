@@ -16,8 +16,8 @@ export class ListOptionsComponent implements OnInit {
   op:Option;
   opnew:Option = new Option();
         
-  private minTime:any="";// = Date.now();
-  private maxTime:any="";//=Date.now();
+   minTime:any="";// = Date.now();
+   maxTime:any="";//=Date.now();
   totalTime:any;
   totalRec : number = 100;
   page: number = 1;
