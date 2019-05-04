@@ -1,6 +1,12 @@
 /// 3.17.59.95
 //ssh -i atiraj_aws.pem ec2-user@3.17.59.95
 //localhost:8161 for ActiveMq
+//Sample JSON
+//{"options":[{"id":"id","stockName":"AAPL","optionName":"AAPL-option1","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500",
+//"optionPrice":"10","lastUpdatedTime":"2019-5-13"},
+//{"id":"id","stockName":"AAPL","optionName":"AAPL-option2","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500",
+//"optionPrice":"10","lastUpdatedTime":"2019-5-13"}]}
+
 
 const express = require('express');
 var Stomp = require('stomp-client');
@@ -33,7 +39,6 @@ var option = {
 const server = http.createServer(app);
 
 const io = socketIO(server);
-
 
 const connectOptions = {
     //'host': 'nimbus',
@@ -84,8 +89,16 @@ const connectOptions = {
           return;
         }
         
-        console.log('received message: ' + body);
-        senddata(socket);  
+        //console.log('received message: ' + body);
+        //console.log("Lenght " + Object.keys(body).);
+        //var jsonArray = new JSONArray(body);
+
+        var opt = JSON.parse(body);
+        //console.log("data recd from queue" + opt.options[0].optionName); 
+      
+        
+        senddata(socket,opt);  
+        
         setTimeout(()=> {
           client.ack(message);
          },200);
@@ -109,7 +122,7 @@ const connectOptions = {
     socket.on('getdata', (data)=>{
         
         console.log("recd from client" + data);
-        senddata(socket);
+        senddata(socket,'');
         
     });
 });
@@ -129,30 +142,27 @@ app.get('*',function(req, res){//get,put,post,delete
 
 
 
-function senddata(socket)
+function senddata(socket,body)
 {
-    var rnd = Math.floor(Math.random() * 97)+ 1;
-    var rnd2 = Math.floor(Math.random() *4)+1
+     var rnd = Math.floor(Math.random() * 97)+ 1;
+        var today = new Date();
+        
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        //body.options[0].optionName=body.options[0].optionName + rnd.toString();  
+        //body.options[0].lastUpdatedTime = dateTime;
+        body.options[0].format=0;
+        //body.options[0].formatColor = "White";
+        socket.emit('data1',body.options[0]);
+        console.log("Data sent From Server opName :" + body.options[0].optionName + "   opPrice:" + body.options[0].optionPrice);
     
-    option.stockName = "AAPL" + rnd;
-      option.optionName = "AAPL190412C00130000-" + rnd;
-      
-      option.strike = rnd*100;
-      option.volatility = .05;
-      option.expiryDate = new Date('12/25/1988');
-      option.stockPrice = 100;
-      option.optionPrice = rnd2 * rnd;
-      option.lastUpdatedTime =  Date.now().toString();
-      
-      option.format=0;
-      option.formatColor="White";
        
-      socket.emit('data1',option);
+      //socket.emit('data1',option);
 
     //  setTimeout(()=> {
 
     //      senddata(socket);
-         console.log("Data From Server opId :" + option.optionName + "Price:" + option.optionPrice);
         
     //     },200);
 

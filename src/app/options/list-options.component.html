@@ -1,13 +1,14 @@
 <!--<button (click)="addOption(option)">New Option</button>-->
 <!--<button (click)="randOption()">Calculate Price</button>-->
  
-
 <!--<div  *ngFor ="let option of options">-->
   <!--  <button (click)="editOption(option)">editOption</button> !-->
   <div>
     <label>Min Time: {{minTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>
+    <br/>
     <label> Max Time: {{maxTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>
-    <label>Total Time: {{totalTime}}</label>
+    <br/>
+    <label [style.background-color]="'yellow'">Total Time: {{totalTime}}</label>
 
   </div>
   <div  class ="container">

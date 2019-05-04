@@ -4,6 +4,7 @@ import { OptionService } from './option.service';
 import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import { DatePipe,formatDate } from '@angular/common';
+
 @Component({
   selector: 'app-list-options',
   templateUrl: './list-options.component.html',
@@ -13,8 +14,10 @@ import { DatePipe,formatDate } from '@angular/common';
 export class ListOptionsComponent implements OnInit {
   socket;
   op:Option;
-  private minTime:any;// = Date.now();
-  private maxTime:any;//=Date.now();
+  opnew:Option = new Option();
+        
+  private minTime:any="";// = Date.now();
+  private maxTime:any="";//=Date.now();
   totalTime:any;
   totalRec : number = 100;
   page: number = 1;
@@ -38,31 +41,81 @@ export class ListOptionsComponent implements OnInit {
     this._optionService.getOption().subscribe(optionList=>{
       this.options=optionList;
     });
-    this.addOption();
+  //  this.addOption();
 
     this.socket.on('data1',(res)=>{
-      console.log("data emitted from server" + res.id +";" + ";" + res.name)
+      console.log("data emitted from server OpName: "  + res.optionName)
+      if (this.minTime == "" ) this.minTime = res.lastUpdatedTime;
+      if (this.maxTime == "" ) this.maxTime = res.lastUpdatedTime;
     
-    //  console.log(res.id);  
-      var oppp = this.options ;
-      var selOptions = this.options.filter(op=>op.optionName.toLowerCase().indexOf(res.optionName.toLowerCase()) !=-1);
+      if (res.optionName.toLowerCase().startsWith("start"))
+      {
+        this.maxTime = "";
+        this.minTime = "";
+        this.totalTime = "";
+        this.options =[];
+        return;
+      }
       
+      
+      var selOptions = this.options.filter(op=>op.optionName.toLowerCase().indexOf(res.optionName.toLowerCase()) !=-1);
+      //alert("lenght" + selOptions.length);
       if (selOptions.length <=0)
-        this.options.push(res);
+      {
+        this.opnew = new Option();
+        this.opnew.stockName = res.stockName;
+        this.opnew.optionName = res.optionName;
+        
+        this.opnew.strike = res.strike;
+        this.opnew.volatility = res.volatility;
+        this.opnew.expiryDate = res.expirtyDate;
+        this.opnew.stockPrice = res.stockPrice;
+        this.opnew.optionPrice = res.optionPrice;
+        this.opnew.lastUpdatedTime =  res.lastUpdatedTime;
+        
+        
+        if (res.lastUpdatedTime >= this.minTime)
+        {
+          
+          this.maxTime = res.lastUpdatedTime;
+          
+          this.totalTime = Date.parse(this.maxTime) - Date.parse(this.minTime) + " MS";
+        }
+        // else
+        // {
+        //   this.minTime = res.lastUpdatedTime;
+        
+        // }
+        this.opnew.format=0;
+        this.opnew.formatColor="White";
+        
+        this.options.push(this.opnew);
+      }
       else
       {
         var selOption = selOptions[0];
-        if (res.optionPrice >=selOption.optionPrice)
+
+        //alert(selOption.optionPrice);
+        if (res.optionPrice >selOption.optionPrice)
             selOption.formatColor = "Red";
-        else if(res.premium ==selOption.optionPrice)
+        else if(res.optionPrice == selOption.optionPrice)
             selOption.formatColor = "White";
         else
           selOption.formatColor = "Green";
+      
+      //this.minTime = res.lastUpdatedTime ;
+        selOption.optionPrice = res.optionPrice;
+      //console.log(selOption.formatColor);
+      
+      if (res.lastUpdatedTime >= this.minTime)
+        {
+          this.maxTime = res.lastUpdatedTime;
+          
+          this.totalTime = Date.parse(this.maxTime) - Date.parse(this.minTime) + " MS";
+        }
+       
       }
-      this.minTime = res.lastUpdatedTime ;
-      selOption.optionPrice = res.optionPrice;
-        console.log(selOption.formatColor);
-        
+    
     });
   }
 
@@ -70,6 +123,11 @@ export class ListOptionsComponent implements OnInit {
     this._optionService.editOption(option);
   }
   
+  datediff(dateStart:string,dateStop:string){
+    let diffInMs: number = Date.parse(dateStart) - Date.parse(dateStop);
+    return diffInMs;
+  }
+
   addOption(){
   //var len = this.options.length;
     for (let i = 1; i < 100; i++) {
@@ -94,7 +152,4 @@ export class ListOptionsComponent implements OnInit {
       }
     
     }
-
-    
-
   }
