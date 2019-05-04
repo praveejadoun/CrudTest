@@ -115,12 +115,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _options_list_options_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./options/list-options.component */ "./src/app/options/list-options.component.ts");
 /* harmony import */ var _options_display_option_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./options/display-option.component */ "./src/app/options/display-option.component.ts");
 /* harmony import */ var _options_option_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./options/option.service */ "./src/app/options/option.service.ts");
+/* harmony import */ var ngx_pagination__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-pagination */ "./node_modules/ngx-pagination/dist/ngx-pagination.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -156,7 +158,8 @@ var AppModule = /** @class */ (function () {
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"].forRoot(appRoutes),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"]
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"],
+                ngx_pagination__WEBPACK_IMPORTED_MODULE_13__["NgxPaginationModule"],
             ],
             providers: [_employees_employee_service__WEBPACK_IMPORTED_MODULE_7__["EmployeeService"], _employees_create_employee_can_deactivate_guard_service__WEBPACK_IMPORTED_MODULE_9__["CreateEmployeeCanDeactivateGuardService"], _options_option_service__WEBPACK_IMPORTED_MODULE_12__["OptionService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
@@ -683,7 +686,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-->\n<!--<button (click)=\"randOption()\">Calculate Price</button>-->\n\n\n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n  \n  <table class=\"table\" border=\"1\">\n        <thead class=\"thead-dark\">\n          <tr>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Strike Price</th>\n            <th scope=\"col\">Volatility</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Premium</th>\n          </tr>\n        </thead> \n        <tbody *ngFor =\"let option of options;trackBy:trackByOptionCode\">\n              \n          <tr *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">\n                  <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.premium}}</td>\n          </tr>\n          <tr *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">\n            <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.premium}}</td>\n        </tr>\n          <tr *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">\n            <th scope=\"row\">{{option.id}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.premium}}</td>\n        </tr>\n        </tbody>\n        </table>\n\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
+module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-->\n<!--<button (click)=\"randOption()\">Calculate Price</button>-->\n \n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n  <div>\n    <label>Min Time: {{minTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>\n    <br/>\n    <label> Max Time: {{maxTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>\n    <br/>\n    <label [style.background-color]=\"'yellow'\">Total Time: {{totalTime}}</label>\n\n  </div>\n  <div  class =\"container\">\n    <table class=\"table table-bordered tabl>e-striped\" >\n        <thead class=\"thead-dark\">\n          <tr>\n            \n            <th scope=\"col\">Stock Name</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Strike</th>\n            <th scope=\"col\">volatility</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Stock Price</th>\n            <th scope=\"col\">Option Price</th>\n            \n            <th scope=\"col\">Last Update Time</th>\n          </tr>\n        </thead> \n\n        \n         <tbody *ngFor =\"let option of options  | paginate: {  id:'listing_pagination', itemsPerPage: 25, currentPage: page };trackBy:trackByOptionCode\"> \n          <!-- <tbody *ngFor =\"let option of options;trackBy:trackByOptionCode\">  -->\n                          \n          <tr *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">\n                  <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                  <!-- <td *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">{{option.optionPrice}}</td>\n                  <td *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">{{option.optionPrice}}</td>\n                  <td *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">{{option.optionPrice}}</td>\n                  -->\n                  <td >{{option.lastUpdatedTime | date}}</td>\n          </tr>\n          <tr *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">\n            <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                  <td>{{option.lastUpdatedTime | date}}</td>\n        </tr>\n          <tr *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">\n            <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                 \n                  <td>{{option.lastUpdatedTime | date}}</td>\n        </tr>\n        </tbody>\n        </table>\n        <div>\n           <pagination-controls  id=\"listing_pagination\" maxSize=\"5\" directionLinks=\"true\" (pageChange)=\"page = $event\"></pagination-controls>\n        </div>\n      </div>\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
 
 /***/ }),
 
@@ -703,6 +706,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -717,9 +721,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ListOptionsComponent = /** @class */ (function () {
     function ListOptionsComponent(_optionService) {
         this._optionService = _optionService;
+        this.opnew = new _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
+        this.minTime = ""; // = Date.now();
+        this.maxTime = ""; //=Date.now();
+        this.totalRec = 100;
+        this.page = 1;
         this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_3__(src_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].webSocketURL);
     }
     ListOptionsComponent.prototype.trackByOptionCode = function (index, option) {
@@ -727,56 +737,93 @@ var ListOptionsComponent = /** @class */ (function () {
     };
     ListOptionsComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.page = 1;
+        //this.totalRec =100;
         //this.options = this._optionService.getOption();
         this._optionService.getOption().subscribe(function (optionList) {
             _this.options = optionList;
         });
-        this.addOption();
+        //  this.addOption();
         this.socket.on('data1', function (res) {
-            console.log("data emitted from server" + res.id + ";" + ";" + res.name);
-            console.log(res.id);
-            var oppp = _this.options;
-            if (res.premium >= oppp[res.id].premium)
-                oppp[res.id].formatColor = "Red";
-            else if (res.premium == oppp[res.id].premium)
-                oppp[res.id].formatColor = "White";
-            else
-                oppp[res.id].formatColor = "Green";
-            oppp[res.id].premium = res.premium;
-            console.log(oppp[res.id].formatColor);
+            console.log("data emitted from server OpName: " + res.optionName);
+            if (_this.minTime == "")
+                _this.minTime = res.lastUpdatedTime;
+            if (_this.maxTime == "")
+                _this.maxTime = res.lastUpdatedTime;
+            if (res.optionName.toLowerCase().startsWith("start")) {
+                _this.maxTime = "";
+                _this.minTime = "";
+                _this.totalTime = "";
+                _this.options = [];
+                return;
+            }
+            var selOptions = _this.options.filter(function (op) { return op.optionName.toLowerCase().indexOf(res.optionName.toLowerCase()) != -1; });
+            //alert("lenght" + selOptions.length);
+            if (selOptions.length <= 0) {
+                _this.opnew = new _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
+                _this.opnew.stockName = res.stockName;
+                _this.opnew.optionName = res.optionName;
+                _this.opnew.strike = res.strike;
+                _this.opnew.volatility = res.volatility;
+                _this.opnew.expiryDate = res.expirtyDate;
+                _this.opnew.stockPrice = res.stockPrice;
+                _this.opnew.optionPrice = res.optionPrice;
+                _this.opnew.lastUpdatedTime = res.lastUpdatedTime;
+                if (res.lastUpdatedTime >= _this.minTime) {
+                    _this.maxTime = res.lastUpdatedTime;
+                    _this.totalTime = Date.parse(_this.maxTime) - Date.parse(_this.minTime) + " MS";
+                }
+                // else
+                // {
+                //   this.minTime = res.lastUpdatedTime;
+                // }
+                _this.opnew.format = 0;
+                _this.opnew.formatColor = "White";
+                _this.options.push(_this.opnew);
+            }
+            else {
+                var selOption = selOptions[0];
+                //alert(selOption.optionPrice);
+                if (res.optionPrice > selOption.optionPrice)
+                    selOption.formatColor = "Red";
+                else if (res.optionPrice == selOption.optionPrice)
+                    selOption.formatColor = "White";
+                else
+                    selOption.formatColor = "Green";
+                //this.minTime = res.lastUpdatedTime ;
+                selOption.optionPrice = res.optionPrice;
+                //console.log(selOption.formatColor);
+                if (res.lastUpdatedTime >= _this.minTime) {
+                    _this.maxTime = res.lastUpdatedTime;
+                    _this.totalTime = Date.parse(_this.maxTime) - Date.parse(_this.minTime) + " MS";
+                }
+            }
         });
     };
     ListOptionsComponent.prototype.editOption = function (option) {
         this._optionService.editOption(option);
     };
+    ListOptionsComponent.prototype.datediff = function (dateStart, dateStop) {
+        var diffInMs = Date.parse(dateStart) - Date.parse(dateStop);
+        return diffInMs;
+    };
     ListOptionsComponent.prototype.addOption = function () {
         //var len = this.options.length;
         for (var i = 1; i < 100; i++) {
             this.op = new _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
-            this.op.id = i.toString();
+            //this.op.id = i.toString();
+            this.op.stockName = "AAPL";
             this.op.optionName = "AAPL190412C00130000-" + i;
             this.op.strike = i * 100;
             this.op.volatility = .05;
             this.op.expiryDate = new Date('12/25/1988');
-            this.op.premium = i * 10;
+            this.op.stockPrice = 100;
+            this.op.optionPrice = 10;
+            this.op.lastUpdatedTime = Object(_angular_common__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(Date.now(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '');
             this.op.format = 0;
             this.op.formatColor = "White";
             this._optionService.newOption(this.op);
         }
-        //this.randOption();
-    };
-    ListOptionsComponent.prototype.randOption = function () {
-        //for (let i = 1; i < 5000; i++) {
-        var len = this.options.length;
-        //alert(len);
-        var rnd = Math.floor(Math.random() * len - 1) + 1;
-        //alert("random:" + rnd);
-        console.log(rnd);
-        var oppp = this.options;
-        oppp[rnd].format = 1;
-        oppp[rnd].premium = rnd;
-        //alert(oppp[rnd]);
-        //}  
     };
     ListOptionsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
