@@ -16,7 +16,10 @@ const app = express();
 
 const path = require('path');
 const http = require('http');
-const socketIO = require('socket.io');
+const socketIO = require('socket.io',{
+  path: '/listOptions'
+  
+});
 
 const port =  5000;
 
@@ -37,7 +40,7 @@ var option = {
   };
 
 const server = http.createServer(app);
-
+var stompclient;
 const io = socketIO(server);
 
 const connectOptions = {
@@ -52,13 +55,16 @@ const connectOptions = {
       //'heart-beat': '5000,5000'
     }
   };
-
+ 
   io.on('connection',(socket)=>{
     console.log('new user connected');
 
     //Start Stomp
-  stompit.connect(connectOptions, function(error, client) {
   
+  //if (stompclient != undefined) return;
+
+  stompit.connect(connectOptions, function(error, client) {
+    stompclient = client;
     if (error) {
       console.log('connect error ' + error.message);
       return;
@@ -72,7 +78,7 @@ const connectOptions = {
     
     client.on('error', (error) => {
       console.log("Error:" + error.message);
-        client.connect();
+        //client.connect();
     });
 
     client.subscribe(subscribeHeaders, function(error, message) {
@@ -96,13 +102,14 @@ const connectOptions = {
         var opt = JSON.parse(body);
         //console.log("data recd from queue" + opt.options[0].optionName); 
       
-        
-        senddata(socket,opt);  
-        
         setTimeout(()=> {
           client.ack(message);
-         },200);
+         },300);
 
+        
+         senddata(socket,opt);  
+        
+        
                 
         //client.disconnect();
         //client.connect();
@@ -116,14 +123,14 @@ const connectOptions = {
 
     socket.on('disconnect', ()=>{
         console.log('user dis-connected');
-        
+        //socket.socket.connect();
     });
     
     socket.on('getdata', (data)=>{
         
 
         console.log("recd from client" + data);
-        senddata(socket,'');
+        //senddata(socket,'');
         
     });
 });
@@ -155,7 +162,7 @@ function senddata(socket,body)
         //body.options[0].lastUpdatedTime = dateTime;
         body.options[0].format=0;
         //body.options[0].formatColor = "White";
-        socket.emit('data1',body.options[0]);
+        socket.emit('broadcast',body.options[0]);
         //socket.senddata('data1',body.options[0]);
         console.log("Data sent From Server opName :" + body.options[0].optionName + "   opPrice:" + body.options[0].optionPrice);
     

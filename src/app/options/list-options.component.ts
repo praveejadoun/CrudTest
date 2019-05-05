@@ -31,7 +31,11 @@ export class ListOptionsComponent implements OnInit {
   options: Option[];
   constructor(private _optionService:OptionService) {
     
-    this.socket = io(environment.webSocketURL);
+    //this.socket = io(environment.webSocketURL);
+    this.socket = io(environment.webSocketURL+"/listOptions", {
+      reconnection: true
+    });
+
    }
 
    ngOnInit() {
@@ -43,7 +47,7 @@ export class ListOptionsComponent implements OnInit {
     });
   //  this.addOption();
 
-    this.socket.on('data1',(res)=>{
+    this.socket.on('broadcast',(res)=>{
       console.log("data emitted from server OpName: "  + res.optionName)
       if (this.minTime == "" ) this.minTime = res.lastUpdatedTime;
       if (this.maxTime == "" ) this.maxTime = res.lastUpdatedTime;
@@ -54,9 +58,11 @@ export class ListOptionsComponent implements OnInit {
         this.minTime = "";
         this.totalTime = "";
         this.options =[];
-        return;
+        this.socket.emit('getdata','testdata');
+       // return;
       }
-      
+      else
+      {     
       
       var selOptions = this.options.filter(op=>op.optionName.toLowerCase().indexOf(res.optionName.toLowerCase()) !=-1);
       //alert("lenght" + selOptions.length);
@@ -115,8 +121,9 @@ export class ListOptionsComponent implements OnInit {
         }
        
       }
-    
+      }
     });
+    this.socket.emit('getdata','testdata');
   }
 
   editOption(option:Option){
