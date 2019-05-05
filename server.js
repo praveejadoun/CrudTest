@@ -158,7 +158,7 @@ function senddata(socket,body)
         //body.options[0].lastUpdatedTime = dateTime;
         body.options[0].format=0;
         //body.options[0].formatColor = "White";
-        socket.emit('broadcast',body.options[0]);
+        socket.emit('data1',body.options[0]);
         //socket.senddata('data1',body.options[0]);
         console.log("Data sent From Server opName :" + body.options[0].optionName + "   opPrice:" + body.options[0].optionPrice);
     

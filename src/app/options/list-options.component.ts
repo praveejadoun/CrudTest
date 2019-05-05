@@ -47,7 +47,7 @@ export class ListOptionsComponent implements OnInit {
     });
   //  this.addOption();
 
-    this.socket.on('broadcast',(res)=>{
+    this.socket.on('data1',(res)=>{
       console.log("data emitted from server OpName: "  + res.optionName)
       if (this.minTime == "" ) this.minTime = res.lastUpdatedTime;
       if (this.maxTime == "" ) this.maxTime = res.lastUpdatedTime;

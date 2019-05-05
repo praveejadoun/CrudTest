@@ -747,7 +747,7 @@ var ListOptionsComponent = /** @class */ (function () {
             _this.options = optionList;
         });
         //  this.addOption();
-        this.socket.on('broadcast', function (res) {
+        this.socket.on('data1', function (res) {
             console.log("data emitted from server OpName: " + res.optionName);
             if (_this.minTime == "")
                 _this.minTime = res.lastUpdatedTime;
