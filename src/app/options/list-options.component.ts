@@ -31,10 +31,10 @@ export class ListOptionsComponent implements OnInit {
   options: Option[];
   constructor(private _optionService:OptionService) {
     
-    //this.socket = io(environment.webSocketURL);
-    this.socket = io(environment.webSocketURL+"/listOptions", {
-      reconnection: true
-    });
+    this.socket = io(environment.webSocketURL);
+    // this.socket = io(environment.webSocketURL, {
+    //   reconnection: true
+    // });
 
    }
 

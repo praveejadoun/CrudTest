@@ -16,10 +16,7 @@ const app = express();
 
 const path = require('path');
 const http = require('http');
-const socketIO = require('socket.io',{
-  path: '/listOptions'
-  
-});
+const socketIO = require('socket.io');
 
 const port =  5000;
 
@@ -61,7 +58,7 @@ const connectOptions = {
 
     //Start Stomp
   
-  //if (stompclient != undefined) return;
+  if (stompclient != undefined) return;
 
   stompit.connect(connectOptions, function(error, client) {
     stompclient = client;
@@ -102,14 +99,13 @@ const connectOptions = {
         var opt = JSON.parse(body);
         //console.log("data recd from queue" + opt.options[0].optionName); 
       
+        
+        senddata(socket,opt);  
+        
         setTimeout(()=> {
           client.ack(message);
-         },300);
+         },200);
 
-        
-         senddata(socket,opt);  
-        
-        
                 
         //client.disconnect();
         //client.connect();

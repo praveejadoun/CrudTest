@@ -730,10 +730,10 @@ var ListOptionsComponent = /** @class */ (function () {
         this.maxTime = ""; //=Date.now();
         this.totalRec = 100;
         this.page = 1;
-        //this.socket = io(environment.webSocketURL);
-        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_3__(src_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].webSocketURL + "/listOptions", {
-            reconnection: true
-        });
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_3__(src_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].webSocketURL);
+        // this.socket = io(environment.webSocketURL, {
+        //   reconnection: true
+        // });
     }
     ListOptionsComponent.prototype.trackByOptionCode = function (index, option) {
         return option.id;
