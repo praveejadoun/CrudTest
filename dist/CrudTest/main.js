@@ -836,7 +836,7 @@ var ListOptionsComponent = /** @class */ (function () {
                     _this.totalTime = Date.parse(_this.maxTime) - Date.parse(_this.minTime) + " MS";
                 }
                 op = new _models_Option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
-                op.id = redisOptions.options[i].id;
+                //op.id = redisOptions.options[i].id;
                 op.stockName = redisOptions.options[i].stockName;
                 op.optionName = redisOptions.options[i].optionName;
                 op.strike = redisOptions.options[i].strike;

@@ -156,7 +156,7 @@ export class ListOptionsComponent implements OnInit {
           }
 
           op = new Option();
-            op.id = redisOptions.options[i].id;
+            //op.id = redisOptions.options[i].id;
             op.stockName= redisOptions.options[i].stockName;
             op.optionName=redisOptions.options[i].optionName;
             op.strike=redisOptions.options[i].strike;
