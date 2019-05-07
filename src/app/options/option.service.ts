@@ -3,14 +3,16 @@ import { Option } from "../models/Option.model";
 import { Observable,BehaviorSubject, of, observable, from } from '../../../node_modules/rxjs';
 import { catchError, observeOn } from 'rxjs/operators';
 import { ObserveOnOperator } from '../../../node_modules/rxjs/internal/operators/observeOn';
-
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OptionService {
+constructor(private httpClient:HttpClient){}
 
    private listOption:Option[]=[];
+   //private op:Option;
   //=[
   //   {
   //     id : 1,
@@ -22,6 +24,13 @@ export class OptionService {
   //     formatColor:"White"
   //   } 
   // ];
+
+ public getOptionRedis(){
+    var redisOptions; 
+    var op: Option; 
+    return this.httpClient.get<Option[]>("/options");//
+    
+}
 
  public getOption():Observable<Option[]>{
       return  of(this.listOption);

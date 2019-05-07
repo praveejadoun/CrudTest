@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Option } from '../models/option.model';
+import { Option } from '../models/Option.model';
 import { OptionService } from './option.service';
 import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
@@ -28,7 +28,7 @@ export class ListOptionsComponent implements OnInit {
   }
   
   
-  options: Option[];
+  options: Option[] = [];
   constructor(private _optionService:OptionService) {
     
     this.socket = io(environment.webSocketURL);
@@ -42,10 +42,11 @@ export class ListOptionsComponent implements OnInit {
     this.page=1;
     //this.totalRec =100;
     //this.options = this._optionService.getOption();
-    this._optionService.getOption().subscribe(optionList=>{
-      this.options=optionList;
-    });
+    // this._optionService.getOption().subscribe(optionList=>{
+    //   this.options=optionList;
+    // });
   //  this.addOption();
+    //this.getOptionFromRedis();
 
     this.socket.on('data1',(res)=>{
       console.log("data emitted from server OpName: "  + res.optionName)
@@ -135,6 +136,45 @@ export class ListOptionsComponent implements OnInit {
     return diffInMs;
   }
 
+  getOptionFromRedis(){
+    var redisOptions; 
+    var op: Option; 
+    this.options = [];    
+      this._optionService.getOptionRedis().subscribe((data)=>
+      {
+        redisOptions = data;
+
+        for(var i=0;i<redisOptions.options.length;i++)
+        {
+          if (this.minTime == "" ) this.minTime = redisOptions.options[i].lastUpdatedTime;
+          if (this.maxTime == "" ) this.maxTime = redisOptions.options[i].lastUpdatedTime;
+          
+          if (redisOptions.options[i].lastUpdatedTime >= this.minTime)
+          {
+            this.maxTime = redisOptions.options[i].lastUpdatedTime;
+            this.totalTime = Date.parse(this.maxTime) - Date.parse(this.minTime) + " MS";
+          }
+
+          op = new Option();
+            op.id = redisOptions.options[i].id;
+            op.stockName= redisOptions.options[i].stockName;
+            op.optionName=redisOptions.options[i].optionName;
+            op.strike=redisOptions.options[i].strike;
+            op.volatility=redisOptions.options[i].volatility;
+            op.expiryDate=redisOptions.options[i].Date;
+            op.stockPrice=redisOptions.options[i].stockPrice;
+            op.optionPrice=redisOptions.options[i].optionPrice;
+            op.lastUpdatedTime=redisOptions.options[i].lastUpdatedTime;
+            op.format=redisOptions.options[i].format;
+            op.formatColor = "White";
+            this.options.push(op);    
+        }       
+    //    console.log(redisOptions.options.length)
+      });
+  
+    
+  }
+  
   addOption(){
   //var len = this.options.length;
     for (let i = 1; i < 100; i++) {

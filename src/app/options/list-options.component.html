@@ -3,6 +3,8 @@
  
 <!--<div  *ngFor ="let option of options">-->
   <!--  <button (click)="editOption(option)">editOption</button> !-->
+   <button (click)="getOptionFromRedis()">Get Redis Data</button>
+
   <div>
     <label>Min Time: {{minTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>
     <br/>
@@ -44,7 +46,7 @@
                   <td *ngIf="option.formatColor === 'Green'" [style.background-color]="'green'">{{option.optionPrice}}</td>
                   <td *ngIf="option.formatColor === 'Red'" [style.background-color]="'red'">{{option.optionPrice}}</td>
                   -->
-                  <td >{{option.lastUpdatedTime | date}}</td>
+                  <td >{{option.lastUpdatedTime | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
           </tr>
           <tr *ngIf="option.formatColor === 'Green'" [style.background-color]="'green'">
             <th scope="row">{{option.stockName}}</th>

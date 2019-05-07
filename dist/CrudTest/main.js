@@ -116,12 +116,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _options_display_option_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./options/display-option.component */ "./src/app/options/display-option.component.ts");
 /* harmony import */ var _options_option_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./options/option.service */ "./src/app/options/option.service.ts");
 /* harmony import */ var ngx_pagination__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-pagination */ "./node_modules/ngx-pagination/dist/ngx-pagination.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -160,6 +162,7 @@ var AppModule = /** @class */ (function () {
                 _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"].forRoot(appRoutes),
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"],
                 ngx_pagination__WEBPACK_IMPORTED_MODULE_13__["NgxPaginationModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_14__["HttpClientModule"]
             ],
             providers: [_employees_employee_service__WEBPACK_IMPORTED_MODULE_7__["EmployeeService"], _employees_create_employee_can_deactivate_guard_service__WEBPACK_IMPORTED_MODULE_9__["CreateEmployeeCanDeactivateGuardService"], _options_option_service__WEBPACK_IMPORTED_MODULE_12__["OptionService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
@@ -550,29 +553,9 @@ var ListEmployeesComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/models/employee.model.ts":
-/*!******************************************!*\
-  !*** ./src/app/models/employee.model.ts ***!
-  \******************************************/
-/*! exports provided: Employee */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Employee", function() { return Employee; });
-var Employee = /** @class */ (function () {
-    function Employee() {
-    }
-    return Employee;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/models/option.model.ts":
+/***/ "./src/app/models/Option.model.ts":
 /*!****************************************!*\
-  !*** ./src/app/models/option.model.ts ***!
+  !*** ./src/app/models/Option.model.ts ***!
   \****************************************/
 /*! exports provided: Option */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -593,6 +576,26 @@ var Option = /** @class */ (function () {
     function Option() {
     }
     return Option;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/models/employee.model.ts":
+/*!******************************************!*\
+  !*** ./src/app/models/employee.model.ts ***!
+  \******************************************/
+/*! exports provided: Employee */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Employee", function() { return Employee; });
+var Employee = /** @class */ (function () {
+    function Employee() {
+    }
+    return Employee;
 }());
 
 
@@ -632,7 +635,7 @@ module.exports = "\n\n<!-- \n<div class=\"panel panel-primary\">\n        \n    
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DisplayOptionComponent", function() { return DisplayOptionComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _models_option_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/option.model */ "./src/app/models/option.model.ts");
+/* harmony import */ var _models_Option_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Option.model */ "./src/app/models/Option.model.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -651,7 +654,7 @@ var DisplayOptionComponent = /** @class */ (function () {
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"])
+        __metadata("design:type", _models_Option_model__WEBPACK_IMPORTED_MODULE_1__["Option"])
     ], DisplayOptionComponent.prototype, "option", void 0);
     DisplayOptionComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -686,7 +689,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-->\n<!--<button (click)=\"randOption()\">Calculate Price</button>-->\n \n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n  <div>\n    <label>Min Time: {{minTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>\n    <br/>\n    <label> Max Time: {{maxTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>\n    <br/>\n    <label [style.background-color]=\"'yellow'\">Total Time: {{totalTime}}</label>\n\n  </div>\n  <div  class =\"container\">\n    <table class=\"table table-bordered tabl>e-striped\" >\n        <thead class=\"thead-dark\">\n          <tr>\n            \n            <th scope=\"col\">Stock Name</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Strike</th>\n            <th scope=\"col\">volatility</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Stock Price</th>\n            <th scope=\"col\">Option Price</th>\n            \n            <th scope=\"col\">Last Update Time</th>\n          </tr>\n        </thead> \n\n        \n         <tbody *ngFor =\"let option of options  | paginate: {  id:'listing_pagination', itemsPerPage: 25, currentPage: page };trackBy:trackByOptionCode\"> \n          <!-- <tbody *ngFor =\"let option of options;trackBy:trackByOptionCode\">  -->\n                          \n          <tr *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">\n                  <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                  <!-- <td *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">{{option.optionPrice}}</td>\n                  <td *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">{{option.optionPrice}}</td>\n                  <td *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">{{option.optionPrice}}</td>\n                  -->\n                  <td >{{option.lastUpdatedTime | date}}</td>\n          </tr>\n          <tr *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">\n            <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                  <td>{{option.lastUpdatedTime | date}}</td>\n        </tr>\n          <tr *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">\n            <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                 \n                  <td>{{option.lastUpdatedTime | date}}</td>\n        </tr>\n        </tbody>\n        </table>\n        <div>\n           <pagination-controls  id=\"listing_pagination\" maxSize=\"5\" directionLinks=\"true\" (pageChange)=\"page = $event\"></pagination-controls>\n        </div>\n      </div>\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
+module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-->\n<!--<button (click)=\"randOption()\">Calculate Price</button>-->\n \n<!--<div  *ngFor =\"let option of options\">-->\n  <!--  <button (click)=\"editOption(option)\">editOption</button> !-->\n   <button (click)=\"getOptionFromRedis()\">Get Redis Data</button>\n\n  <div>\n    <label>Min Time: {{minTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>\n    <br/>\n    <label> Max Time: {{maxTime | date:'yyyy-MM-dd hh:mm:ss'}}</label>\n    <br/>\n    <label [style.background-color]=\"'yellow'\">Total Time: {{totalTime}}</label>\n\n  </div>\n  <div  class =\"container\">\n    <table class=\"table table-bordered tabl>e-striped\" >\n        <thead class=\"thead-dark\">\n          <tr>\n            \n            <th scope=\"col\">Stock Name</th>\n            <th scope=\"col\">Option Name</th>\n            <th scope=\"col\">Strike</th>\n            <th scope=\"col\">volatility</th>\n            <th scope=\"col\">Expiry Date</th>\n            <th scope=\"col\">Stock Price</th>\n            <th scope=\"col\">Option Price</th>\n            \n            <th scope=\"col\">Last Update Time</th>\n          </tr>\n        </thead> \n\n        \n         <tbody *ngFor =\"let option of options  | paginate: {  id:'listing_pagination', itemsPerPage: 25, currentPage: page };trackBy:trackByOptionCode\"> \n          <!-- <tbody *ngFor =\"let option of options;trackBy:trackByOptionCode\">  -->\n                          \n          <tr *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">\n                  <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                  <!-- <td *ngIf=\"option.formatColor === 'White'\" [style.background-color]=\"'white'\">{{option.optionPrice}}</td>\n                  <td *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">{{option.optionPrice}}</td>\n                  <td *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">{{option.optionPrice}}</td>\n                  -->\n                  <td >{{option.lastUpdatedTime | date: 'yyyy-MM-dd hh:mm:ss'}}</td>\n          </tr>\n          <tr *ngIf=\"option.formatColor === 'Green'\" [style.background-color]=\"'green'\">\n            <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                  <td>{{option.lastUpdatedTime | date}}</td>\n        </tr>\n          <tr *ngIf=\"option.formatColor === 'Red'\" [style.background-color]=\"'red'\">\n            <th scope=\"row\">{{option.stockName}}</th>\n                  <td>{{option.optionName}}</td>\n                  <td>{{option.strike}}</td>\n                  <td>{{option.volatility}}</td>\n                  <td>{{option.expiryDate | date}}</td>\n                  <td>{{option.stockPrice}}</td>\n                  <td>{{option.optionPrice}}</td>\n                 \n                  <td>{{option.lastUpdatedTime | date}}</td>\n        </tr>\n        </tbody>\n        </table>\n        <div>\n           <pagination-controls  id=\"listing_pagination\" maxSize=\"5\" directionLinks=\"true\" (pageChange)=\"page = $event\"></pagination-controls>\n        </div>\n      </div>\n    <!--<app-display-option [option]=\"option\"></app-display-option>-->   \n<!--</div>-->\n"
 
 /***/ }),
 
@@ -701,7 +704,7 @@ module.exports = "<!--<button (click)=\"addOption(option)\">New Option</button>-
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ListOptionsComponent", function() { return ListOptionsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _models_option_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/option.model */ "./src/app/models/option.model.ts");
+/* harmony import */ var _models_Option_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/Option.model */ "./src/app/models/Option.model.ts");
 /* harmony import */ var _option_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./option.service */ "./src/app/options/option.service.ts");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_3__);
@@ -725,11 +728,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ListOptionsComponent = /** @class */ (function () {
     function ListOptionsComponent(_optionService) {
         this._optionService = _optionService;
-        this.opnew = new _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
+        this.opnew = new _models_Option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
         this.minTime = ""; // = Date.now();
         this.maxTime = ""; //=Date.now();
         this.totalRec = 100;
         this.page = 1;
+        this.options = [];
         this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_3__(src_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].webSocketURL);
         // this.socket = io(environment.webSocketURL, {
         //   reconnection: true
@@ -743,10 +747,11 @@ var ListOptionsComponent = /** @class */ (function () {
         this.page = 1;
         //this.totalRec =100;
         //this.options = this._optionService.getOption();
-        this._optionService.getOption().subscribe(function (optionList) {
-            _this.options = optionList;
-        });
+        // this._optionService.getOption().subscribe(optionList=>{
+        //   this.options=optionList;
+        // });
         //  this.addOption();
+        //this.getOptionFromRedis();
         this.socket.on('data1', function (res) {
             console.log("data emitted from server OpName: " + res.optionName);
             if (_this.minTime == "")
@@ -765,7 +770,7 @@ var ListOptionsComponent = /** @class */ (function () {
                 var selOptions = _this.options.filter(function (op) { return op.optionName.toLowerCase().indexOf(res.optionName.toLowerCase()) != -1; });
                 //alert("lenght" + selOptions.length);
                 if (selOptions.length <= 0) {
-                    _this.opnew = new _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
+                    _this.opnew = new _models_Option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
                     _this.opnew.stockName = res.stockName;
                     _this.opnew.optionName = res.optionName;
                     _this.opnew.strike = res.strike;
@@ -814,10 +819,43 @@ var ListOptionsComponent = /** @class */ (function () {
         var diffInMs = Date.parse(dateStart) - Date.parse(dateStop);
         return diffInMs;
     };
+    ListOptionsComponent.prototype.getOptionFromRedis = function () {
+        var _this = this;
+        var redisOptions;
+        var op;
+        this.options = [];
+        this._optionService.getOptionRedis().subscribe(function (data) {
+            redisOptions = data;
+            for (var i = 0; i < redisOptions.options.length; i++) {
+                if (_this.minTime == "")
+                    _this.minTime = redisOptions.options[i].lastUpdatedTime;
+                if (_this.maxTime == "")
+                    _this.maxTime = redisOptions.options[i].lastUpdatedTime;
+                if (redisOptions.options[i].lastUpdatedTime >= _this.minTime) {
+                    _this.maxTime = redisOptions.options[i].lastUpdatedTime;
+                    _this.totalTime = Date.parse(_this.maxTime) - Date.parse(_this.minTime) + " MS";
+                }
+                op = new _models_Option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
+                op.id = redisOptions.options[i].id;
+                op.stockName = redisOptions.options[i].stockName;
+                op.optionName = redisOptions.options[i].optionName;
+                op.strike = redisOptions.options[i].strike;
+                op.volatility = redisOptions.options[i].volatility;
+                op.expiryDate = redisOptions.options[i].Date;
+                op.stockPrice = redisOptions.options[i].stockPrice;
+                op.optionPrice = redisOptions.options[i].optionPrice;
+                op.lastUpdatedTime = redisOptions.options[i].lastUpdatedTime;
+                op.format = redisOptions.options[i].format;
+                op.formatColor = "White";
+                _this.options.push(op);
+            }
+            //    console.log(redisOptions.options.length)
+        });
+    };
     ListOptionsComponent.prototype.addOption = function () {
         //var len = this.options.length;
         for (var i = 1; i < 100; i++) {
-            this.op = new _models_option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
+            this.op = new _models_Option_model__WEBPACK_IMPORTED_MODULE_1__["Option"]();
             //this.op.id = i.toString();
             this.op.stockName = "AAPL";
             this.op.optionName = "AAPL190412C00130000-" + i;
@@ -859,18 +897,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OptionService", function() { return OptionService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _node_modules_rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 
 var OptionService = /** @class */ (function () {
-    function OptionService() {
+    function OptionService(httpClient) {
+        this.httpClient = httpClient;
         this.listOption = [];
     }
+    //private op:Option;
     //=[
     //   {
     //     id : 1,
@@ -882,6 +927,11 @@ var OptionService = /** @class */ (function () {
     //     formatColor:"White"
     //   } 
     // ];
+    OptionService.prototype.getOptionRedis = function () {
+        var redisOptions;
+        var op;
+        return this.httpClient.get("/options"); //
+    };
     OptionService.prototype.getOption = function () {
         return Object(_node_modules_rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.listOption);
     };
@@ -895,7 +945,8 @@ var OptionService = /** @class */ (function () {
     OptionService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
-        })
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], OptionService);
     return OptionService;
 }());

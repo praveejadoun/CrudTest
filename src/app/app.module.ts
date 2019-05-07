@@ -13,6 +13,7 @@ import { ListOptionsComponent } from './options/list-options.component';
 import { DisplayOptionComponent } from './options/display-option.component';
 import {OptionService} from './options/option.service'
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpClientModule } from '@angular/common/http';
 
 
 const appRoutes :Routes=[
@@ -40,6 +41,7 @@ const appRoutes :Routes=[
     RouterModule.forRoot(appRoutes),
     FormsModule,
     NgxPaginationModule,
+    HttpClientModule
    ],
   providers: [EmployeeService,CreateEmployeeCanDeactivateGuardService,OptionService],
   bootstrap: [AppComponent]

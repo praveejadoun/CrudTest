@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { Option } from '../models/option.model';
+import { Option } from '../models/Option.model';
 
 @Component({
   selector: 'app-display-option',
