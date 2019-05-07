@@ -50,7 +50,7 @@ app.use(bodyParser.urlencoded({
 }));
 // Start the Server
 http.listen(port, function() {
-    console.log('Server Started. Listening on *:' + port);
+    console.log('Node Server Started. Listening on *:' + port);
 });
 // Store people in chatroom
 var chatters = [];
@@ -65,7 +65,7 @@ var options = [];
     // Initialize Chatters
     var op = '{"options":[{"id":"id","stockName":"AAPL","optionName":"AAPL-option1","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500", "optionPrice":"10","lastUpdatedTime":"2019-5-13 11:00:01"},{"id":"id","stockName":"AAPL","optionName":"AAPL-option2","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500","optionPrice":"10","lastUpdatedTime":"2019-5-13 11:00:02"}]}';
     //client.set('options',op);
-    console.log ("Redis client connected");
+    console.log ("Redis client connected with config : " + 'redis://' + creds.user + ':' + creds.password + '@' + creds.host + ':' + creds.port);
     client.get('options', function(err, reply) {
         if (reply) {
             //options = JSON.parse(reply);

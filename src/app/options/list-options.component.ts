@@ -169,7 +169,7 @@ export class ListOptionsComponent implements OnInit {
             op.formatColor = "White";
             this.options.push(op);
             
-            console.log("data from redis:" + redisOptions.optionName);
+            console.log("data from redis:" + redisOptions.options[i].optionName);
         }       
     //    console.log(redisOptions.options.length)
       });

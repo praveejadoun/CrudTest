@@ -848,7 +848,7 @@ var ListOptionsComponent = /** @class */ (function () {
                 op.format = redisOptions.options[i].format;
                 op.formatColor = "White";
                 _this.options.push(op);
-                console.log("data from redis:" + redisOptions.optionName);
+                console.log("data from redis:" + redisOptions.options[i].optionName);
             }
             //    console.log(redisOptions.options.length)
         });
