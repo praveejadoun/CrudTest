@@ -23,7 +23,7 @@
 var creds={
     "user": "",
     "password": "",
-    "host": "localhost",
+    "host": "optpricing.3monrn.0001.use2.cache.amazonaws.com",
     "port": 6379
 };
 
