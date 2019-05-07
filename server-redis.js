@@ -32,6 +32,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var async = require('async');
 const path = require('path');
 
 var options;
@@ -57,31 +58,73 @@ var chatters = [];
 // Store messages in chatroom
 var chat_messages = [];
 
+var option = {
+    
+  id :'',
+  stockName:'',
+  optionName:'',
+  strike:0,
+  volatility:0,
+  expiryDate: '',
+  stockPrice:0,
+  optionPrice:0,
+  lastUpdatedTime:'',
+  format:0,
+  formatColor:''
+  };
+
 var options = [];
  // Redis Client Ready
  client.once('ready', function() {
     // Flush Redis DB
     // client.flushdb();
     // Initialize Chatters
-    var op = '{"options":[{"id":"id","stockName":"AAPL","optionName":"AAPL-option1","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500", "optionPrice":"10","lastUpdatedTime":"2019-5-13 11:00:01"},{"id":"id","stockName":"AAPL","optionName":"AAPL-option2","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500","optionPrice":"10","lastUpdatedTime":"2019-5-13 11:00:02"}]}';
-    //client.set('options',op);
+    //var op = '{"options":[{"id":"id","stockName":"AAPL","optionName":"AAPL-option1","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500", "optionPrice":"10","lastUpdatedTime":"2019-5-13 11:00:01"},{"id":"id","stockName":"AAPL","optionName":"AAPL-option2","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500","optionPrice":"10","lastUpdatedTime":"2019-5-13 11:00:02"}]}';
+    var op ='{\"stockName\":\"AAPL\",\"optionName\":\"AAPL191018C00140000-1\",\"strike\":140.0,\"volatility\":0.004691215,\"expiryDate\":\"2019-10-18\",\"stockPrice\":200.37,\"optionPrice\":61.98082568324042,\"lastUpdatedTime\":{\"date\":\"2019-05-06\",\"time\":{\"hour\":18,\"minute\":36,\"second\":48,\"nano\":754000000}},\"batchId\":\"BATCH_ID_8\"}';
+    client.set('AAPL191018C00140000-1',op);
     console.log ("Redis client connected with config : " + 'redis://' + creds.user + ':' + creds.password + '@' + creds.host + ':' + creds.port);
-    client.get('options', function(err, reply) {
-        if (reply) {
-            //options = JSON.parse(reply);
-            console.log("Data of options:" + JSON.parse(reply))
-        }
-    });
+    // client.get('options', function(err, reply) {
+    //     if (reply) {
+    //         //options = JSON.parse(reply);
+    //         console.log("Data of options:" + JSON.parse(reply))
+    //     }
+    // });
+
+      
 });
 
-app.use(express.static(path.join(__dirname,'dist/crudtest/')));
+app.use(express.static(path.join(__dirname,'dist/CrudTest/')));
 
 // API - Get Messages
 app.get('/options', function(req, res) {
-    client.get('options', function(err, reply) {
-        if (reply) {
-            //options = JSON.parse(reply);
-            res.send(JSON.parse(reply));
+    
+  client.keys('*', function (err, keys) {
+    if (err) return console.log(err);
+  
+    for(var i = 0, len = keys.length; i < len; i++) {
+      //console.log(keys[i]);
+      client.get(keys[i], function(err, reply) {
+        if (reply) 
+        {
+          console.log(reply);
+             data = JSON.parse(reply);
+             console.log(data);
+            //var op = new option { a=0,b=0};
+             option.id = "id";
+            
+             option.stockName= data.stockName;
+             option.optionName = data.optionName;
+             option.strike = data.strike;
+             option.volatility = data.volatility;
+             option.expiryDate = data.expiryDate;
+             option.stockPrice= data.stockPrice;
+             option.optionPrice = data.optionPrice;
+             option.lastUpdatedTime = data.lastUpdatedTime.date + " " + data.lastUpdatedTime.time.hour + ":" + data.lastUpdatedTime.time.minute + ":" + data.lastUpdatedTime.time.second;
+            // op.format = 0;
+            // op.formatColor = "White";
+            // console.log(reply);
+            options.push(data);
+            //console.log("op lenght" + options.length);
         }
         
         else
@@ -89,11 +132,16 @@ app.get('/options', function(req, res) {
             console.log("Redis is not respondng");
         }
     });
-   
-    //res.send(option);
+
+    }
+  }); 
+
+  console.log("op lenght" + options.length);
+
+    res.send(options);
   });
   
   app.get('/',function(req, res){//get,put,post,delete   
-    res.sendFile(__dirname + '/dist/crudtest/index.html');
+    res.sendFile(__dirname + '/dist/CrudTest/index.html');
     //console.log
   });

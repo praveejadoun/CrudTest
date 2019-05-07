@@ -1,5 +1,5 @@
 /// 3.17.59.95
-//ssh -i atiraj_aws.pem ec2-user@3.17.59.95
+//ssh -i atiraj_aws.pem ec2-user@13.59.173.13
 //localhost:8161 for ActiveMq
 //Sample JSON
 //{"options":[{"id":"id","stockName":"AAPL","optionName":"AAPL-option1","strike":"AAPL-strike","volatility":"0","expiryDate":"2019-05-12","stockPrice":"500",

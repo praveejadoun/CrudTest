@@ -143,33 +143,36 @@ export class ListOptionsComponent implements OnInit {
       this._optionService.getOptionRedis().subscribe((data)=>
       {
         redisOptions = data;
+      //console.log("redisoptionlen : " + redisOptions.);
+      //return;
 
-        for(var i=0;i<redisOptions.options.length;i++)
+        for(var i=0;i<redisOptions.length;i++)
         {
-          if (this.minTime == "" ) this.minTime = redisOptions.options[i].lastUpdatedTime;
-          if (this.maxTime == "" ) this.maxTime = redisOptions.options[i].lastUpdatedTime;
+          var datetime = redisOptions[i].lastUpdatedTime.date + " " + redisOptions[i].lastUpdatedTime.time.hour + ":" + redisOptions[i].lastUpdatedTime.time.minute + ":" + redisOptions[i].lastUpdatedTime.time.second;
+          if (this.minTime == "" ) this.minTime = datetime;
+          if (this.maxTime == "" ) this.maxTime = datetime;
           
-          if (redisOptions.options[i].lastUpdatedTime >= this.minTime)
+          if (redisOptions.lastUpdatedTime >= this.minTime)
           {
-            this.maxTime = redisOptions.options[i].lastUpdatedTime;
+            this.maxTime = datetime;
             this.totalTime = Date.parse(this.maxTime) - Date.parse(this.minTime) + " MS";
           }
 
           op = new Option();
             //op.id = redisOptions.options[i].id;
-            op.stockName= redisOptions.options[i].stockName;
-            op.optionName=redisOptions.options[i].optionName;
-            op.strike=redisOptions.options[i].strike;
-            op.volatility=redisOptions.options[i].volatility;
-            op.expiryDate=redisOptions.options[i].Date;
-            op.stockPrice=redisOptions.options[i].stockPrice;
-            op.optionPrice=redisOptions.options[i].optionPrice;
-            op.lastUpdatedTime=redisOptions.options[i].lastUpdatedTime;
-            op.format=redisOptions.options[i].format;
+            op.stockName= redisOptions[i].stockName;
+            op.optionName=redisOptions[i].optionName;
+            op.strike=redisOptions[i].strike;
+            op.volatility=redisOptions[i].volatility;
+            op.expiryDate=redisOptions[i].expiryDate;
+            op.stockPrice=redisOptions[i].stockPrice;
+            op.optionPrice=redisOptions[i].optionPrice;
+            op.lastUpdatedTime=datetime;
+            op.format=0;
             op.formatColor = "White";
             this.options.push(op);
             
-            console.log("data from redis:" + redisOptions.options[i].optionName);
+            console.log("data from redis:" + redisOptions[i].optionName);
         }       
     //    console.log(redisOptions.options.length)
       });
