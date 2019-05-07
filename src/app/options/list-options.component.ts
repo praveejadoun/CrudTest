@@ -167,7 +167,9 @@ export class ListOptionsComponent implements OnInit {
             op.lastUpdatedTime=redisOptions.options[i].lastUpdatedTime;
             op.format=redisOptions.options[i].format;
             op.formatColor = "White";
-            this.options.push(op);    
+            this.options.push(op);
+            
+            console.log("data from redis:" + redisOptions.optionName);
         }       
     //    console.log(redisOptions.options.length)
       });
